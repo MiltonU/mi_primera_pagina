@@ -1,66 +1,21 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Iniciar sesión - Vinos Boutique</title>
-  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      background-color: #FAF3E0;
-      background-image: url("{% static 'img/fondo-vino.jpg' %}");
-      background-size: cover;
-      background-position: center;
-      color: #4B3F4E;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .login-box {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 3rem;
-      border-radius: 10px;
-      max-width: 400px;
-      width: 100%;
-      color: #FAF3E0;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    form input {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 0.5rem 0;
-      border: none;
-      border-radius: 5px;
-    }
-    form button {
-      width: 100%;
-      padding: 0.8rem;
-      background-color: #800020;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-    form button:hover {
-      background-color: #B22222;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-box">
-    <h2>Acceder a Vinos Boutique</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Iniciar sesión</button>
-    </form>
+{% extends 'mi_primer_app/base.html' %}
+
+{% block content %}
+<div class="login-container">
+  <h2>Ingresá a tu cuenta</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="username">Usuario:</label>
+    <input type="text" name="username" id="username" required>
+
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" id="password" required>
+
+    <button type="submit">Iniciar sesión</button>
+  </form>
+
+  <div class="registro-link">
+    <p>¿No tenés cuenta? <a href="{% url 'registro' %}">Registrate acá</a></p>
   </div>
-</body>
-</html>
+</div>
+{% endblock %}

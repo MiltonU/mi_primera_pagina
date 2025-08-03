@@ -1,0 +1,27 @@
+{% extends 'mi_primer_app/base.html' %}
+
+{% block content %}
+<div class="formulario-container">
+  <h2>Ingreso de Datos</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>Bodega</legend>
+      {{ bodega_form.as_p }}
+    </fieldset>
+
+    <fieldset>
+      <legend>Vino</legend>
+      {{ vino_form.as_p }}
+    </fieldset>
+
+    <fieldset>
+      <legend>Reseña</legend>
+      {{ reseña_form.as_p }}
+    </fieldset>
+
+    <button type="submit" class="form-button">Guardar datos</button>
+  </form>
+</div>
+{% endblock %}

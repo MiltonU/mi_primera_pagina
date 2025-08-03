@@ -1,0 +1,14 @@
+{% extends 'mi_primer_app/base.html' %}
+
+{% block content %}
+<div class="verificacion-container">
+  <h2>Bienvenido a nuestra tienda boutique</h2>
+  <p>Este sitio contiene información sobre vinos. ¿Sos mayor de 18 años?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button name="respuesta" value="si" class="boton-si">Sí</button>
+    <button name="respuesta" value="no" class="boton-no">No</button>
+  </form>
+</div>
+{% endblock %}

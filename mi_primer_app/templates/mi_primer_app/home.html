@@ -1,86 +1,15 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Vinos Boutique</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      background-color: #5C1A1B;
-      background-image: url("{% static 'img/fondo-vino.jpg' %}");
-      background-size: cover;
-      background-position: center;
-      color: #FAF3E0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+{% extends 'mi_primer_app/base.html' %}
 
-    .verificacion {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 3rem;
-      text-align: center;
-      border-radius: 10px;
-      max-width: 500px;
-    }
+{% block content %}
+<div class="home-container">
+  <h1>Bienvenido a la tienda boutique de vinos</h1>
+  <p>Descubrí sabores únicos, seleccionados con pasión y buen gusto.</p>
+  <p>Antes de ingresar, necesitamos saber si sos mayor de edad.</p>
 
-    .verificacion h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .verificacion p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .botones {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .botones button {
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      color: #fff;
-      transition: background-color 0.3s ease;
-    }
-
-    .mayor {
-      background-color: #800020;
-    }
-
-    .mayor:hover {
-      background-color: #B22222;
-    }
-
-    .menor {
-      background-color: #4B3F4E;
-    }
-
-    .menor:hover {
-      background-color: #6A5B7D;
-    }
-  </style>
-</head>
-<body>
-  <div class="verificacion">
-    <h1>Vinos Boutique</h1>
-    <p>Este sitio está destinado a mayores de 18 años. Por favor, indicá si sos mayor.</p>
-    
-    <form method="post">
-      {% csrf_token %}
-      <div class="botones">
-        <button type="submit" name="mayor" value="sí" class="mayor">Soy mayor</button>
-        <button type="submit" name="mayor" value="no" class="menor">No soy mayor</button>
-      </div>
-    </form>
-  </div>
-</body>
-</html>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" name="mayor" value="sí" class="boton-si">Sí, tengo más de 18 años</button>
+    <button type="submit" name="mayor" value="no" class="boton-no">No, soy menor de edad</button>
+  </form>
+</div>
+{% endblock %}
