@@ -1,62 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Iniciar sesión</title>
-    <style>
-        body {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Vinos Boutique</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background-color: #5C1A1B;
+      background-image: url("{% static 'img/fondo-vino.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      color: #FAF3E0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .verificacion {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 3rem;
+      text-align: center;
+      border-radius: 10px;
+      max-width: 500px;
+    }
+
+    .verificacion h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .verificacion p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .botones button {
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+
+    .mayor {
+      background-color: #800020;
+    }
+
+    .mayor:hover {
+      background-color: #B22222;
+    }
+
+    .menor {
+      background-color: #4B3F4E;
+    }
+
+    .menor:hover {
+      background-color: #6A5B7D;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Iniciar sesión</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Usuario" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <button type="submit">Entrar</button>
-        </form>
-    </div>
+  <div class="verificacion">
+    <h1>Vinos Boutique</h1>
+    <p>Este sitio está destinado a mayores de 18 años. Por favor, indicá si sos mayor.</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      <div class="botones">
+        <button type="submit" name="mayor" value="sí" class="mayor">Soy mayor</button>
+        <button type="submit" name="mayor" value="no" class="menor">No soy mayor</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
-

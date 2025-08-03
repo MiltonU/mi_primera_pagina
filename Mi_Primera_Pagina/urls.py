@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mi_primer_app.urls')),  # <-- Esto conecta tu vista a la raíz
-]
+    path('', include('mi_primer_app.urls')),
+    ]
 
