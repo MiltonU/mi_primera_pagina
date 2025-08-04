@@ -13,12 +13,13 @@ def hola_mundo(request):
 # 🏡 Página de inicio con verificación de edad
 def home(request):
     if request.method == 'POST':
-        if request.POST.get('mayor') == 'sí':
+        if request.POST.get('respuesta') == 'si':
             request.session['verificado'] = True
             return redirect('mostrar_login')
         else:
             return redirect('rechazo')
     return render(request, 'mi_primer_app/home.html')
+
 
 # ❌ Vista para usuarios que no son mayores de edad
 def rechazo(request):

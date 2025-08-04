@@ -1,0 +1,9 @@
+{% extends 'mi_primer_app/base.html' %}
+
+{% block content %}
+  <div style="text-align: center; padding: 60px;">
+    <h2 style="color: #800020;">Acceso Denegado 🍇</h2>
+    <p style="color: #4a0d1f;">Esta cava es sólo para mayores de 18 años. Te esperamos pronto...</p>
+    <a href="{% url 'home' %}" style="text-decoration: underline; color: #800020; font-weight: bold;">Volver al inicio</a>
+  </div>
+{% endblock %}

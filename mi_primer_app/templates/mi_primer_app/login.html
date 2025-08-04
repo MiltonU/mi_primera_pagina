@@ -1,21 +1,34 @@
 {% extends 'mi_primer_app/base.html' %}
 
 {% block content %}
-<div class="login-container">
-  <h2>Ingresá a tu cuenta</h2>
-  <form method="post">
-    {% csrf_token %}
-    <label for="username">Usuario:</label>
-    <input type="text" name="username" id="username" required>
+  <div style="text-align: center; background-color: #fff8f0; padding: 60px; border-radius: 12px; max-width: 700px; margin: auto; font-family: 'Playfair Display', serif;">
+    <h2 style="font-size: 36px; color: #800020; margin-bottom: 30px;">Acceso a tu cava personal 🍇</h2>
 
-    <label for="password">Contraseña:</label>
-    <input type="password" name="password" id="password" required>
+    <form method="post" style="display: flex; flex-direction: column; align-items: center;">
+      {% csrf_token %}
 
-    <button type="submit">Iniciar sesión</button>
-  </form>
+      <div style="margin-bottom: 20px; width: 100%; max-width: 400px;">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+      </div>
 
-  <div class="registro-link">
-    <p>¿No tenés cuenta? <a href="{% url 'registro' %}">Registrate acá</a></p>
+      <div style="margin-bottom: 30px; width: 100%; max-width: 400px;">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+      </div>
+
+      <button type="submit" style="background-color: #800020; color: white; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer;">
+        Ingresar
+      </button>
+    </form>
+
+    <div style="margin-top: 30px;">
+      <p style="color: #4a0d1f; font-size: 16px;">
+        ¿No tenés cuenta?
+        <a href="{% url 'registro' %}" style="color: #800020; font-weight: bold; text-decoration: underline;">
+          Registrate aquí
+        </a>
+      </p>
+    </div>
   </div>
-</div>
 {% endblock %}
