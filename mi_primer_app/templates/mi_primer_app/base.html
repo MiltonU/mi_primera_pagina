@@ -2,37 +2,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Tienda Boutique de Vinos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>{% block title %}Bodega Boutique{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'mi_primer_app/css/estilos.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="margin: 0; background-color: #fdf7f2; font-family: 'Playfair Display', serif; color: #4a0d1f;">
+<body>
+    <header>
+        <div class="logo">
+            <h1>🍷 Bodega Boutique</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Inicio</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'registro' %}">Registro</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Encabezado con estilo boutique -->
-  <header style="background-color: #fff8f0; padding: 30px 0; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-    <h1 style="font-size: 42px; color: #800020; margin: 0;">Vinos Boutique</h1>
-    
-    <!-- Navegación -->
-    <nav>
-      <ul style="list-style: none; display: flex; justify-content: center; gap: 30px; padding: 0; margin: 20px 0;">
-        <li><a href="{% url 'home' %}" style="text-decoration: none; color: #4a0d1f; font-weight: bold;">Inicio</a></li>
-        <li><a href="{% url 'formulario' %}" style="text-decoration: none; color: #4a0d1f; font-weight: bold;">Ingreso de Datos</a></li>
-        <li><a href="{% url 'buscar_vinos' %}" style="text-decoration: none; color: #4a0d1f; font-weight: bold;">Buscar Vinos</a></li>
-       
-    </nav>
-  </header>
+    <main>
+        {% block content %}
+        <!-- Contenido específico de cada vista -->
+        {% endblock %}
+    </main>
 
-  <!-- Contenido principal -->
-  <main style="min-height: 70vh; padding: 40px 20px;">
-    {% block content %}
-    {% endblock %}
-  </main>
-
-  <!-- Pie de página -->
-  <footer style="background-color: #f5eee6; padding: 20px; text-align: center; font-size: 14px; color: #633a2b;">
-    <p style="margin: 0;">&copy; 2025 Vinos Boutique · Código con sabor 🍇</p>
-  </footer>
-  
+    <footer>
+        <p>&copy; 2025 Bodega Boutique. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>
