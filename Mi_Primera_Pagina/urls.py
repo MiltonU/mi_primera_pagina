@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mi_primer_app.urls')),
-    ]
-
+    path('', include('mi_primer_app.urls')),  # Tu app principal
+    path('accounts/', include('django.contrib.auth.urls')),  # Autenticación
+]

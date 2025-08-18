@@ -1,39 +1,15 @@
+<!-- templates/mi_primer_app/registro.html -->
 {% extends 'mi_primer_app/base.html' %}
 
+{% block title %}Registro{% endblock %}
+
 {% block content %}
-  <div style="text-align: center; background-color: #fff8f0; padding: 60px; border-radius: 12px; max-width: 700px; margin: auto; font-family: 'Playfair Display', serif;">
-    <h2 style="font-size: 36px; color: #800020; margin-bottom: 30px;">Crear tu cuenta en la bodega 🍷</h2>
-
-    <form method="post" style="display: flex; flex-direction: column; align-items: center;">
-      {% csrf_token %}
-
-      <div style="margin-bottom: 20px; width: 100%; max-width: 400px;">
-        <label for="username" style="display: block; text-align: left; margin-bottom: 5px;">Usuario:</label>
-        <input type="text" name="username" id="username" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-      </div>
-
-      <div style="margin-bottom: 20px; width: 100%; max-width: 400px;">
-        <label for="email" style="display: block; text-align: left; margin-bottom: 5px;">Email:</label>
-        <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-      </div>
-
-      <div style="margin-bottom: 30px; width: 100%; max-width: 400px;">
-        <label for="password" style="display: block; text-align: left; margin-bottom: 5px;">Contraseña:</label>
-        <input type="password" name="password" id="password" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-      </div>
-
-      <button type="submit" style="background-color: #800020; color: white; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer;">
-        Registrarme
-      </button>
+<div class="registro-container">
+    <h2>Crear cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarme</button>
     </form>
-
-    <div style="margin-top: 30px;">
-      <p style="color: #4a0d1f; font-size: 16px;">
-        ¿Ya tenés cuenta?
-        <a href="{% url 'mostrar_login' %}" style="color: #800020; font-weight: bold; text-decoration: underline;">
-          Ingresá aquí
-        </a>
-      </p>
-    </div>
-  </div>
+</div>
 {% endblock %}

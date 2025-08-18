@@ -1,14 +1,26 @@
 {% extends 'mi_primer_app/base.html' %}
 
-{% block content %}
-<div style="text-align: center; background-color: #fff8f0; padding: 60px; border-radius: 12px; max-width: 700px; margin: auto; font-family: 'Playfair Display', serif;">
-  <h2 style="font-size: 36px; color: #800020; margin-bottom: 20px;">Bienvenidos a la Bodega Boutique</h2>
-  <p style="font-size: 18px; color: #4a0d1f;">Antes de descorchar... ¿tenés edad suficiente para brindar con estilo?</p>
+{% block title %}Bienvenido a Bodega Boutique{% endblock %}
 
-  <form method="post" style="margin-top: 40px;">
-    {% csrf_token %}
-    <button name="respuesta" value="si" type="submit" style="background-color: #800020; color: white; padding: 12px 24px; margin: 10px; border-radius: 8px; border: none; cursor: pointer;">Sí, tengo más de 18</button>
-    <button name="respuesta" value="no" type="submit" style="background-color: #ccc; color: #333; padding: 12px 24px; margin: 10px; border-radius: 8px; border: none; cursor: pointer;">No, soy menor</button>
-  </form>
+{% block content %}
+<div class="auth-container" style="display: flex; gap: 40px; justify-content: center; margin-top: 40px;">
+    <div class="login-box" style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+        <h2>Iniciar sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ login_form.as_p }}
+            <button type="submit" name="login_submit">Ingresar</button>
+        </form>
+    </div>
+
+    <div class="registro-box" style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+        <h2>¿No tenés cuenta?</h2>
+        <p>Registrate como usuario para comprar vinos</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ registro_form.as_p }}
+            <button type="submit" name="registro_submit">Registrarme</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

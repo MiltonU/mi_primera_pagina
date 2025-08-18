@@ -1,0 +1,14 @@
+{% extends 'mi_primer_app/base.html' %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <h2>Accedé a tu cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Ingresar</button>
+    </form>
+</div>
+{% endblock %}
