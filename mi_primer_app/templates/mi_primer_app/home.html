@@ -1,26 +1,12 @@
 {% extends 'mi_primer_app/base.html' %}
-
-{% block title %}Bienvenido a Bodega Boutique{% endblock %}
-
 {% block content %}
-<div class="auth-container" style="display: flex; gap: 40px; justify-content: center; margin-top: 40px;">
-    <div class="login-box" style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-        <h2>Iniciar sesión</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ login_form.as_p }}
-            <button type="submit" name="login_submit">Ingresar</button>
-        </form>
-    </div>
-
-    <div class="registro-box" style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-        <h2>¿No tenés cuenta?</h2>
-        <p>Registrate como usuario para comprar vinos</p>
-        <form method="post">
-            {% csrf_token %}
-            {{ registro_form.as_p }}
-            <button type="submit" name="registro_submit">Registrarme</button>
-        </form>
-    </div>
+<div class="bienvenida">
+    <h2>Bienvenido, {{ user.username }} 👋</h2>
+    {% if edad_verificada %}
+        <p>Gracias por verificar tu edad. ¡Disfrutá la experiencia completa de nuestra bodega boutique!</p>
+    {% else %}
+        <p>⚠️ Aún no verificaste tu edad. Algunas funciones están limitadas.</p>
+        <a href="{% url 'verificar_edad' %}" class="boton-verificar">Verificar edad</a>
+    {% endif %}
 </div>
 {% endblock %}

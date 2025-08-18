@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Bodega Boutique{% endblock %}</title>
+    <title>Bodega Boutique</title>
     <link rel="stylesheet" href="{% static 'mi_primer_app/css/estilos.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -14,9 +14,17 @@
         </div>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}">Inicio</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'registro' %}">Registro</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'home' %}">Inicio</a></li>
+                    <li><a href="{% url 'agregar_vino' %}">Agregar Vino</a></li>
+                    {% if edad_verificada %}
+                        <li><a href="{% url 'comprar_vino' vino_id=1 %}">Comprar</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'registro' %}">Registro</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -26,16 +34,5 @@
         <!-- Contenido específico de cada vista -->
         {% endblock %}
     </main>
-
-    <footer>
-        <p>&copy; 2025 Bodega Boutique. Todos los derechos reservados.</p>
-    </footer>
 </body>
 </html>
-{% if user.is_authenticated %}
-    <li>Bienvenido, {{ user.username }}</li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-{% else %}
-    <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'registro' %}">Registro</a></li>
-{% endif %}
