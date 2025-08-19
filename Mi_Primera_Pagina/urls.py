@@ -19,8 +19,8 @@ from django.urls import path, include
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda request: redirect('login'), name='root_redirect'),
+    path('', lambda request: redirect('verificar_edad'), name='root_redirect'),
     path('admin/', admin.site.urls),
-    path('', include('mi_primer_app.urls')),  # ✅ Incluye todas las vistas de tu app
-    path('accounts/', include('django.contrib.auth.urls')),  # Login, logout, etc.
+    path('', include('mi_primer_app.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

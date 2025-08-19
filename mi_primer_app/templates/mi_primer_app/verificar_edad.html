@@ -1,0 +1,14 @@
+{% extends 'mi_primer_app/base.html' %}
+{% block content %}
+<div class="bienvenida">
+    <h2>¿Sos mayor de 18 años?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="respuesta" value="si" class="boton-verificar">Sí</button>
+        <button type="submit" name="respuesta" value="no" class="boton-verificar">No</button>
+    </form>
+    {% if denegado %}
+        <p style="color: red; margin-top: 1rem;">Lo sentimos, no podés continuar.</p>
+    {% endif %}
+</div>
+{% endblock %}
