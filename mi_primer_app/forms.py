@@ -16,4 +16,17 @@ class BodegaForm(forms.ModelForm):
 class VinoForm(forms.ModelForm):
     class Meta:
         model = Vino
-        fields = ['bodega', 'nombre', 'reseña']
+        fields = ['bodega', 'nombre', 'descripcion']
+        labels = {
+            'descripcion': 'Reseña',
+        }
+        widgets = {
+            'descripcion': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Notas de cata, maridaje, historia del vino...',
+                'class': 'form-control'
+            }),
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'bodega': forms.Select(attrs={'class': 'form-control'}),
+        }
+
