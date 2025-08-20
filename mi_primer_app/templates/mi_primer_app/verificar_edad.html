@@ -1,0 +1,15 @@
+{% extends "mi_primer_app/base.html" %}
+
+{% block content %}
+  <div class="verificacion-container">
+    <h2>¿Sos mayor de edad?</h2>
+    {% if denegado %}
+      <p class="error">Acceso denegado. Solo mayores de edad pueden continuar.</p>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" name="respuesta" value="si">Sí</button>
+      <button type="submit" name="respuesta" value="no">No</button>
+    </form>
+  </div>
+{% endblock %}
