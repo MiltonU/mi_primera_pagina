@@ -1,23 +1,16 @@
 {% extends 'mi_primer_app/base.html' %}
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
-  <div class="login-container">
-    <h2>Accedé a tu cuenta</h2>
-
-    {% if form.errors %}
-      <p style="color: red;">Usuario o contraseña incorrectos</p>
-    {% endif %}
-
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Ingresar</button>
-    </form>
-
-    <div class="registro-link">
-      <p>¿No sos usuario? <a href="{% url 'registro' %}">Registrarme</a></p>
+  <div class="container-boutique">
+    <div class="card-boutique">
+      <h2 class="titulo-boutique">Accedé a tu cuenta</h2>
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Usuario" class="input-boutique">
+        <input type="password" name="password" placeholder="Contraseña" class="input-boutique">
+        <button type="submit" class="boton-boutique">Ingresar</button>
+      </form>
+      <p class="texto-secundario">¿No sos usuario? <a href="/registro/">Registrarme</a></p>
     </div>
   </div>
 {% endblock %}

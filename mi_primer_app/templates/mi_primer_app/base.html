@@ -1,42 +1,27 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Bodega Boutique</title>
-    <link rel="stylesheet" href="{% static 'mi_primer_app/css/estilos.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>{% block title %}Mi Bodega{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'mi_primer_app/css/estilos.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <h1>🍷 Bodega Boutique</h1>
-        </div>
 
-        {% if request.path != '/app/login/' and request.path != '/app/registro/' and request.path != '/app/verificar_edad/' %}
+    <header class="header-logo-full">
+  <img src="{% static 'mi_primer_app/img/logo_gris.png' %}" alt="Mi Bodega" class="logo-full">
+</header>
 
-        <nav>
-            <ul>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'buscar_vino' %}">Inicio</a></li>
-                    <li><a href="{% url 'agregar_vino' %}">Agregar Vino</a></li>
-                    {% if edad_verificada %}
-                        <li><a href="{% url 'comprar_vino' vino_id=1 %}">Comprar</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'registro' %}">Registro</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% endif %}
-    </header>
 
-    <main>
-        {% block content %}
-        <!-- Contenido específico de cada vista -->
-        {% endblock %}
-    </main>
+  {% block content %}
+  <!-- Aquí se insertará el contenido de cada template hijo -->
+  {% endblock %}
+
+  <footer>
+    <p>© 2025 Mi Bodega. Todos los derechos reservados.</p>
+    <p class="moderacion">Beber con moderación</p>
+  </footer>
+
 </body>
 </html>
