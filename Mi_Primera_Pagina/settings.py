@@ -124,9 +124,11 @@ STATICFILES_DIRS = [BASE_DIR / 'mi_primer_app/static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/agregar/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/buscar/'
 LOGOUT_REDIRECT_URL = '/login/'
-LOGIN_REDIRECT_URL = '/home/'
+
+
 
 
 

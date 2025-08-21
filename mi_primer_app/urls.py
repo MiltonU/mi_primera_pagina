@@ -3,11 +3,9 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # Página principal
-    path('', views.home, name='home'),
-
+    
     # Verificación de edad
-    path('verificar-edad/', views.verificar_edad, name='verificar_edad'),
+    path('verificar_edad/', views.verificar_edad, name='verificar_edad'),
 
     # Registro de usuario
     path('registro/', views.registro_usuario, name='registro'),

@@ -1,15 +1,21 @@
-{% extends "mi_primer_app/base.html" %}
+{% extends 'mi_primer_app/base.html' %}
+
+{% block title %}Verificación de Edad | Boutique de Vinos{% endblock %}
 
 {% block content %}
-  <div class="verificacion-container">
-    <h2>¿Sos mayor de edad?</h2>
-    {% if denegado %}
-      <p class="error">Acceso denegado. Solo mayores de edad pueden continuar.</p>
-    {% endif %}
+<div class="contenedor-verificacion">
+    <h1>🍷 Bienvenido a nuestra tienda boutique</h1>
+    <p>Por favor, verificá tu edad para continuar</p>
     <form method="post">
-      {% csrf_token %}
-      <button type="submit" name="respuesta" value="si">Sí</button>
-      <button type="submit" name="respuesta" value="no">No</button>
+        {% csrf_token %}
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad" id="edad" min="0" required>
+        <br>
+        <button type="submit">Ingresar</button>
     </form>
-  </div>
+
+    {% if request.GET.next %}
+        <div class="mensaje">⚠️ Necesitás verificar tu edad para acceder a esa sección.</div>
+    {% endif %}
+</div>
 {% endblock %}
