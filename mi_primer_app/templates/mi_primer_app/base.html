@@ -12,10 +12,13 @@
         <div class="logo">
             <h1>🍷 Bodega Boutique</h1>
         </div>
+
+        {% if request.path != '/app/login/' and request.path != '/app/registro/' and request.path != '/app/verificar_edad/' %}
+
         <nav>
             <ul>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'home' %}">Inicio</a></li>
+                    <li><a href="{% url 'buscar_vino' %}">Inicio</a></li>
                     <li><a href="{% url 'agregar_vino' %}">Agregar Vino</a></li>
                     {% if edad_verificada %}
                         <li><a href="{% url 'comprar_vino' vino_id=1 %}">Comprar</a></li>
@@ -27,6 +30,7 @@
                 {% endif %}
             </ul>
         </nav>
+        {% endif %}
     </header>
 
     <main>

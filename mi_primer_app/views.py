@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from .forms import VinoForm
-from .models import Vino
+from .models import Vino, Bodega  # ✅ Import limpio y funcional
 
 # Decorador boutique: edad verificada + login
 def acceso_boutique(view_func):
@@ -19,18 +19,12 @@ def acceso_boutique(view_func):
 # Verificación de edad
 def verificar_edad(request):
     if request.method == 'POST':
-        edad = int(request.POST.get('edad'))
-        if edad >= 18:
-            request.session['edad_verificada'] = True
+        respuesta = request.POST.get('respuesta')
+        if respuesta == 'si':
+            request.session['edad_verificada'] = True  # ✅ Guardar verificación
             return redirect('login')
         else:
-            return render(request, 'mi_primer_app/no_autorizado.html')
-
-    # Si ya verificó edad, va al login
-    if request.session.get('edad_verificada'):
-        return redirect('login')
-
-    # Muestra el formulario
+            return render(request, 'mi_primer_app/acceso_denegado.html')
     return render(request, 'mi_primer_app/verificar_edad.html')
 
 # Registro de usuario nuevo
@@ -45,22 +39,51 @@ def registro_usuario(request):
         form = UserCreationForm()
     return render(request, 'mi_primer_app/registro.html', {'form': form})
 
-# Vista de login con control de edad
+# Login personalizado con verificación de edad
 class CustomLoginView(LoginView):
-    template_name = 'mi_primer_app/registration/login.html'
+    template_name = 'registration/login.html'  # ✅ Estética boutique
 
     def dispatch(self, request, *args, **kwargs):
-        # Si no verificó edad, no puede loguearse
         if not request.session.get('edad_verificada'):
             return redirect('verificar_edad')
         return super().dispatch(request, *args, **kwargs)
 
-# Buscar vino
+# Logout explícito
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('login')
+
+# Buscar vino con filtros refinados
 @acceso_boutique
 def buscar_vino(request):
-    query = request.GET.get('q')
-    resultados = Vino.objects.filter(nombre__icontains=query) if query else Vino.objects.all()
-    return render(request, 'mi_primer_app/buscar.html', {'resultados': resultados, 'query': query})
+    vinos = Vino.objects.all()
+    bodegas = Bodega.objects.all()
+
+    # Filtros refinados
+    cepa = request.GET.get('cepa')
+    terroir = request.GET.get('terroir')
+    bodega_id = request.GET.get('bodega')
+    pais = request.GET.get('pais')
+    precio_min = request.GET.get('precio_min')
+    precio_max = request.GET.get('precio_max')
+
+    if cepa:
+        vinos = vinos.filter(cepa__icontains=cepa)
+    if terroir:
+        vinos = vinos.filter(terroir__icontains=terroir)
+    if bodega_id:
+        vinos = vinos.filter(bodega__id=bodega_id)
+    if pais:
+        vinos = vinos.filter(bodega__pais__icontains=pais)
+    if precio_min:
+        vinos = vinos.filter(precio__gte=precio_min)
+    if precio_max:
+        vinos = vinos.filter(precio__lte=precio_max)
+
+    return render(request, 'mi_primer_app/buscar.html', {
+        'vinos': vinos,
+        'bodegas': bodegas
+    })
 
 # Agregar vino
 @acceso_boutique
@@ -74,14 +97,9 @@ def agregar_vino(request):
         form = VinoForm()
     return render(request, 'mi_primer_app/formulario.html', {'form': form})
 
-# Comprar vino
+# Comprar vino (pendiente: implementación boutique)
 @acceso_boutique
 def comprar_vino(request, vino_id):
     vino = get_object_or_404(Vino, id=vino_id)
-    return render(request, 'mi_primer_app/comprar.html', {'vino': vino})
-
-# Redirección inicial
-def redireccion_inicio(request):
-    return redirect('verificar_edad')
-
-
+    # Lógica de compra pendiente: carrito, confirmación, etc.
+    return render(request, 'mi_primer_app/compra_confirmada.html', {'vino': vino})

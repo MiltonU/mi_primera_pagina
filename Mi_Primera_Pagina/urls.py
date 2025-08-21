@@ -21,6 +21,7 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('app/', include('mi_primer_app.urls')),  # Prefijo explícito
+    path('', include('mi_primer_app.urls')),  # Prefijo explícito
     path('', lambda request: redirect('verificar_edad'), name='root_redirect'),
+    
 ]
