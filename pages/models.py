@@ -2,6 +2,19 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 
+
+class Vino(models.Model):
+    nombre = models.CharField(max_length=100)
+    varietal = models.CharField(max_length=100)
+    añada = models.DateField()
+    notas = RichTextField()
+    maridaje = models.TextField()
+    imagen = models.ImageField(upload_to='vinos/')
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return f"{self.nombre} ({self.añada})"
+    
 class Page(models.Model):
     title = models.CharField("Título", max_length=200, default="Sin título")
     subtitle = models.CharField("Subtítulo", max_length=255, default="Sin subtítulo")

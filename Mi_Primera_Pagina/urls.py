@@ -1,17 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
+from .views import home_view  # si la vista está en Mi_Primera_Pagina/views.py
 
 urlpatterns = [
-    # Admin
+    path('', home_view, name='home'),  # ← esta es la raíz del sitio
     path('admin/', admin.site.urls),
-
-    # Autenticación (login/logout por defecto)
-    path('accounts/', include('django.contrib.auth.urls')),
-
-    # App principal (mi_primera_app)
-    path('', include('mi_primer_app.urls')),
-
-    # Otras apps
+    path('accounts/', include('accounts.urls')),
     path('pages/', include('pages.urls')),
     path('messenger/', include('messenger.urls')),
+
 ]

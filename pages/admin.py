@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import Page
 from django.utils.html import format_html
+from django.contrib import admin
+from .models import Vino  # o FichaVino
+
+admin.site.register(Vino)
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Vinos Boutique{% endblock %}
+{% block content %}
+  <h1>Vinos disponibles</h1>
+
+  {% if vinos %}
+    <div class="vino-grid">
+      {% for vino in vinos %}
+        <div class="vino-card">
+          <h2>{{ vino.nombre }} ({{ vino.añada }})</h2>
+          <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-img">
+          <p>{{ vino.varietal }}</p>
+          <a href="{% url 'vino_detail' vino.slug %}">Leer más</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No hay vinos aún.</p>
+  {% endif %}
+{% endblock %}
