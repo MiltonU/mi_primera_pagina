@@ -11,7 +11,19 @@ class InboxView(LoginRequiredMixin, ListView):
     context_object_name = "messages"
 
     def get_queryset(self):
-        return Message.objects.filter(recipient=self.request.user).order_by("-sent_at")
+        qs = Message.objects.filter(recipient=self.request.user).order_by("-sent_at")
+        read = self.request.GET.get("read")
+        sender = self.request.GET.get("sender")
+
+        if read == "true":
+            qs = qs.filter(read=True)
+        elif read == "false":
+            qs = qs.filter(read=False)
+
+        if sender:
+            qs = qs.filter(sender__username__icontains=sender)
+
+        return qs
 
 class SentView(LoginRequiredMixin, ListView):
     model = Message
@@ -57,21 +69,8 @@ class ReplyView(LoginRequiredMixin, CreateView):
         original = get_object_or_404(Message, pk=self.kwargs["pk"])
         form.instance.sender = self.request.user
         form.instance.recipient = original.sender
+        form.instance.subject = f"Re: {original.subject}"
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy("messenger:sent")
-    def get_queryset(self):
-    qs = Message.objects.filter(recipient=self.request.user).order_by("-sent_at")
-    read = self.request.GET.get("read")
-    sender = self.request.GET.get("sender")
-
-    if read == "true":
-        qs = qs.filter(read=True)
-    elif read == "false":
-        qs = qs.filter(read=False)
-
-    if sender:
-        qs = qs.filter(sender__username__icontains=sender)
-
-    return qs
