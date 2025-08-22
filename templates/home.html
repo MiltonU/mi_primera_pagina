@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
-{% block title %}Verificación de Edad{% endblock %}
-{% block content %}
-  <h1>Bienvenido a la Bodega Boutique</h1>
-  <p>Para continuar, confirmá que sos mayor de edad:</p>
+{% block title %}Bienvenido a la experiencia boutique{% endblock %}
 
-  {% if error %}
-    <p style="color: red;">{{ error }}</p>
-  {% endif %}
+{% block content %}
+<section class="home-form">
+  <h1>¿Tenés edad suficiente para explorar?</h1>
+  <p>Ingresá tu edad para acceder a nuestra selección sensorial de vinos artesanales.</p>
 
   <form method="post">
     {% csrf_token %}
     <label for="edad">Edad:</label>
-    <input type="number" name="edad" min="0" required>
-    <button type="submit">Ingresar</button>
+    <input type="number" name="edad" id="edad" min="0" required placeholder="Ej. 25">
+    <button type="submit" class="btn">Ingresar</button>
   </form>
+
+  {% if error %}
+    <div class="error-msg">
+      <p>{{ error }}</p>
+    </div>
+  {% endif %}
+</section>
 {% endblock %}

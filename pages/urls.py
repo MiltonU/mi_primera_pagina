@@ -13,6 +13,8 @@ urlpatterns = [
     path('vinos/<slug:slug>/', VinoDetailView.as_view(), name='vino_detail'),
     path('vinos/update/<slug:slug>/', VinoUpdateView.as_view(), name='vino_update'),
     path('vinos/delete/<slug:slug>/', VinoDeleteView.as_view(), name='vino_delete'),
+        
+
 
     # 📄 Vistas para Page
     path('', PageListView.as_view(), name='page_list'),

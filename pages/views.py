@@ -11,6 +11,7 @@ class VinoListView(ListView):
     template_name = 'pages/vino_list.html'
     context_object_name = 'vinos'
 
+
 class VinoDetailView(DetailView):
     model = Vino
     template_name = 'pages/vino_detail.html'
