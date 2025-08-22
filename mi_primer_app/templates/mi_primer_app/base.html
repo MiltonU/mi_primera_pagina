@@ -1,25 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Mi Bodega{% endblock %}</title>
-  {% load static %}
   <link rel="stylesheet" href="{% static 'mi_primer_app/css/estilos.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-    <header class="header-logo-full">
-  <img src="{% static 'mi_primer_app/img/logo_gris.png' %}" alt="Mi Bodega" class="logo-full">
-</header>
+  <!-- Header con logo extendido -->
+  <header class="header-logo-full">
+    <img src="{% static 'mi_primer_app/img/logo_gris.png' %}" alt="Mi Bodega" class="logo-full">
+  </header>
 
+  <!-- Contenido dinámico -->
+  <main>
+    {% block content %}
+    <!-- Aquí se insertará el contenido de cada template hijo -->
+    {% endblock %}
+  </main>
 
-  {% block content %}
-  <!-- Aquí se insertará el contenido de cada template hijo -->
-  {% endblock %}
-
-  <footer>
-    <p>© 2025 Mi Bodega. Todos los derechos reservados.</p>
+  <!-- Footer boutique -->
+  <footer class="footer-boutique">
+    <p>© 2025 <strong>Mi Bodega</strong>. Todos los derechos reservados.</p>
     <p class="moderacion">Beber con moderación</p>
   </footer>
 

@@ -1,16 +1,18 @@
 {% extends 'mi_primer_app/base.html' %}
 
+{% block title %}Login - Mi Bodega{% endblock %}
+
 {% block content %}
-  <div class="container-boutique">
-    <div class="card-boutique">
+  <section class="container-boutique">
+    <div class="card-boutique animate-fade">
       <h2 class="titulo-boutique">Accedé a tu cuenta</h2>
       <form method="post">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Usuario" class="input-boutique">
-        <input type="password" name="password" placeholder="Contraseña" class="input-boutique">
+        <input type="text" name="username" placeholder="Usuario" class="input-boutique" required>
+        <input type="password" name="password" placeholder="Contraseña" class="input-boutique" required>
         <button type="submit" class="boton-boutique">Ingresar</button>
       </form>
       <p class="texto-secundario">¿No sos usuario? <a href="/registro/">Registrarme</a></p>
     </div>
-  </div>
+  </section>
 {% endblock %}

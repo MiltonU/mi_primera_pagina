@@ -1,34 +1,44 @@
 {% extends 'mi_primer_app/base.html' %}
-{% block content %}
-  <h2>Explorá nuestra colección boutique</h2>
-  <form method="get">
-    <input type="text" name="cepa" placeholder="Cepa (Malbec, Cabernet...)">
-    <input type="text" name="terroir" placeholder="Terroir (Mendoza...)">
-    <select name="bodega">
-      <option value="">Todas las bodegas</option>
-      {% for bodega in bodegas %}
-        <option value="{{ bodega.id }}">{{ bodega.nombre }}</option>
-      {% endfor %}
-    </select>
-    <input type="text" name="pais" placeholder="País">
-    <input type="number" name="precio_min" placeholder="Precio mínimo">
-    <input type="number" name="precio_max" placeholder="Precio máximo">
-    <button type="submit">Filtrar</button>
-  </form>
 
-  <h3>Resultados</h3>
-  <ul>
-    {% for vino in vinos %}
-      <li style="margin-bottom: 20px;">
-        {% if vino.imagen %}
-          <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" style="width: 150px; filter: grayscale(100%); border-radius: 8px;">
-        {% endif %}
-        <strong>{{ vino.nombre }}</strong> — {{ vino.cepa }}  
-        <br><em>{{ vino.terroir }} | {{ vino.bodega.nombre }} ({{ vino.bodega.pais }})</em>
-        <br><span>${{ vino.precio }}</span>
-      </li>
-    {% empty %}
-      <li>No se encontraron vinos con esos criterios.</li>
-    {% endfor %}
-  </ul>
+{% block title %}Colección Boutique - Mi Bodega{% endblock %}
+
+{% block content %}
+  <section class="exploracion-boutique">
+    <h2 class="titulo-boutique">Explorá nuestra colección boutique</h2>
+    
+    <form method="get" class="formulario-filtro">
+      <div class="grupo-filtro">
+        <input type="text" name="cepa" placeholder="Cepa (Malbec, Cabernet...)" class="input-boutique">
+        <input type="text" name="terroir" placeholder="Terroir (Mendoza...)" class="input-boutique">
+        <select name="bodega" class="input-boutique">
+          <option value="">Todas las bodegas</option>
+          {% for bodega in bodegas %}
+            <option value="{{ bodega.id }}">{{ bodega.nombre }}</option>
+          {% endfor %}
+        </select>
+        <input type="text" name="pais" placeholder="País" class="input-boutique">
+        <input type="number" name="precio_min" placeholder="Precio mínimo" class="input-boutique">
+        <input type="number" name="precio_max" placeholder="Precio máximo" class="input-boutique">
+      </div>
+      <button type="submit" class="boton-boutique">Filtrar</button>
+    </form>
+
+    <h3 class="subtitulo-boutique">Resultados</h3>
+    <ul class="lista-vinos">
+      {% for vino in vinos %}
+        <li class="vino-item">
+          {% if vino.imagen %}
+            <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="imagen-vino">
+          {% endif %}
+          <div class="vino-detalle">
+            <strong class="vino-nombre">{{ vino.nombre }}</strong> — {{ vino.cepa }}
+            <br><em>{{ vino.terroir }} | {{ vino.bodega.nombre }} ({{ vino.bodega.pais }})</em>
+            <br><span class="vino-precio">${{ vino.precio }}</span>
+          </div>
+        </li>
+      {% empty %}
+        <li class="vino-item">No se encontraron vinos con esos criterios.</li>
+      {% endfor %}
+    </ul>
+  </section>
 {% endblock %}

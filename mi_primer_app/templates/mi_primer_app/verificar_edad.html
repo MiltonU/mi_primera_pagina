@@ -1,16 +1,16 @@
 {% extends 'mi_primer_app/base.html' %}
-{% load static %}
+
+{% block title %}Verificación de Edad - Mi Bodega{% endblock %}
 
 {% block content %}
-
-<main class="verificacion-wrapper">
-  <div class="pregunta-verificacion">
-    <h2>¿Sos mayor de edad?</h2>
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit" name="respuesta" value="si">Sí</button>
-      <button type="submit" name="respuesta" value="no">No</button>
-    </form>
+  <div class="overlay-verificacion">
+    <div class="card-verificacion animate-fade">
+      <h2 class="titulo-boutique">¿Sos mayor de 18 años?</h2>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="respuesta" value="si" class="boton-boutique">Sí, soy mayor</button>
+        <button type="submit" name="respuesta" value="no" class="boton-boutique boton-secundario">No</button>
+      </form>
+    </div>
   </div>
-</main>
 {% endblock %}
