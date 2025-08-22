@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-delete">
+  <h2>¿Estás seguro que querés eliminar esta página?</h2>
+  <p><strong>{{ page.title }}</strong></p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'pages:page_detail' page.pk %}">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

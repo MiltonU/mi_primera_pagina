@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">
+    {% if form.instance.pk %}
+      Editar ficha: {{ form.instance.title }}
+    {% else %}
+      Crear nueva ficha académica
+    {% endif %}
+  </h2>
+
+  <form method="post" enctype="multipart/form-data" class="needs-validation">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="id_title" class="form-label">Título</label>
+      {{ form.title }}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_content" class="form-label">Contenido enriquecido</label>
+      {{ form.content }}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_image" class="form-label">Imagen destacada</label>
+      {{ form.image }}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_created_at" class="form-label">Fecha de publicación</label>
+      {{ form.created_at }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {% if form.instance.pk %}Guardar cambios{% else %}Publicar ficha{% endif %}
+    </button>
+    <a href="{% url 'pages:list' %}" class="btn btn-outline-secondary ms-2">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

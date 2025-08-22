@@ -1,0 +1,15 @@
+<div class="col-md-4 mb-4">
+  <div class="card h-100 shadow-sm">
+    {% if page.image %}
+      <img src="{{ page.image.url }}" class="card-img-top" alt="{{ page.title }}">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ page.title }}</h5>
+      <p class="card-text">{{ page.content|truncatewords:30 }}</p>
+      <a href="{% url 'pages:detail' page.pk %}" class="btn btn-outline-primary">Ver más</a>
+    </div>
+    <div class="card-footer text-muted small">
+      Publicado el {{ page.created_at|date:"d M Y" }}
+    </div>
+  </div>
+</div>

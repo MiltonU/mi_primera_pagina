@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Blog Boutique{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'pages/css/pages.css' %}">
+</head>
+<body>
+    <div class="layout-container">
+        <header class="layout-header">
+            <h1 class="site-title">Blog Boutique</h1>
+            <nav class="site-nav">
+                <a href="{% url 'pages:list' %}">Inicio</a>
+                <a href="{% url 'about' %}">Sobre mí</a>
+                <a href="{% url 'profile' %}">Perfil</a>
+            </nav>
+        </header>
+
+        <main class="layout-main">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="layout-footer">
+            <p>&copy; {{ now|date:"Y" }} — Narrativa sensorial por Milton</p>
+        </footer>
+    </div>
+</body>
+</html>

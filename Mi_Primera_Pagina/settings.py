@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'mi_primer_app',
     'pages',
     'ckeditor',
+    'accounts',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
