@@ -16,4 +16,7 @@ urlpatterns = [
     path('inicio/', include('mi_primer_app.urls')), 
    
     path('pages/', include('pages.urls')),
+
+    
+    path("messenger/", include("messenger.urls"))
 ]

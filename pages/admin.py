@@ -1,20 +1,25 @@
 from django.contrib import admin
 from .models import Page
+from django.utils.html import format_html
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ("title", "subtitle", "author", "created_at")
-    list_filter = ("author", "created_at")
-    search_fields = ("title", "subtitle", "content")
-    date_hierarchy = "created_at"
-    ordering = ("-created_at",)
-    readonly_fields = ("created_at",)
-
+    list_display = ('title', 'created_at', 'preview_image')
+    list_filter = ('created_at',)
+    search_fields = ('title', 'content')
+    readonly_fields = ('created_at',)
     fieldsets = (
-        ("Información principal", {
-            "fields": ("title", "subtitle", "author", "created_at")
+        ('Ficha académica', {
+            'fields': ('title', 'content', 'image')
         }),
-        ("Contenido", {
-            "fields": ("content", "image")
+        ('Metadatos', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
         }),
     )
+
+    def preview_image(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 80px; border-radius: 4px;" />', obj.image.url)
+        return "—"
+    preview_image.short_description = "Imagen"
