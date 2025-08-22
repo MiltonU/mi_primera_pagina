@@ -103,3 +103,7 @@ def comprar_vino(request, vino_id):
     vino = get_object_or_404(Vino, id=vino_id)
     # Lógica de compra pendiente: carrito, confirmación, etc.
     return render(request, 'mi_primer_app/compra_confirmada.html', {'vino': vino})
+
+def root_redirect_view(request):
+    return redirect('verificar_edad')
+

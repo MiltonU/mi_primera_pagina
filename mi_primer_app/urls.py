@@ -1,28 +1,10 @@
 from django.urls import path
-from . import views
-from django.contrib.auth import views as auth_views
+from .views import root_redirect_view, login_view, home_view, buscar_view
 
 urlpatterns = [
-    
-    # Verificación de edad
-    path('verificar_edad/', views.verificar_edad, name='verificar_edad'),
-
-    # Registro de usuario
-    path('registro/', views.registro_usuario, name='registro'),
-
-    # Login nativo con template boutique
-    path('login/', views.CustomLoginView.as_view(), name='login'),
-
-    # Logout (opcional, usando vista nativa)
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-
-    # Formulario para agregar vino
-    path('agregar/', views.agregar_vino, name='agregar_vino'),
-
-    # Comprar vino
-    path('comprar/<int:vino_id>/', views.comprar_vino, name='comprar_vino'),
-
-    # Buscar vino
-    path('buscar/', views.buscar_vino, name='buscar_vino'),
+    path('', root_redirect_view, name='root_redirect'),
+    path('verificar_edad/', verificar_edad_view, name='verificar_edad'),
+    path('login/', login_view, name='login'),
+    path('home/', home_view, name='home'),
+    path('buscar/', buscar_view, name='buscar'),
 ]
-
