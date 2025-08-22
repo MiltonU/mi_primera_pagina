@@ -9,7 +9,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     # App principal (mi_primera_app)
-    path('', include('mi_primera_app.urls')),
+    path('', include('mi_primer_app.urls')),
 
     # Otras apps
     path('pages/', include('pages.urls')),
