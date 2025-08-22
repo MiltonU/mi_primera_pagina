@@ -2,6 +2,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import Page
+from django.shortcuts import get_object_or_404
+
+def page_detail(request, pk):
+    page = get_object_or_404(Page, pk=pk)
+    return render(request, 'pages/page_detail.html', {'page': page})
+
 
 # 🗂 Listado de páginas
 class PageListView(LoginRequiredMixin, ListView):

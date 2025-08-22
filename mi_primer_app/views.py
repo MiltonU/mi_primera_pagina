@@ -107,3 +107,10 @@ def comprar_vino(request, vino_id):
 def root_redirect_view(request):
     return redirect('verificar_edad')
 
+from pages.models import Page
+
+def home_view(request):
+    if not request.session.get('edad_verificada'):
+        return redirect('verificar_edad')
+    pages = Page.objects.order_by('-created_at')[:5]
+    return render(request, 'mi_primera_app/home.html', {'pages': pages})
