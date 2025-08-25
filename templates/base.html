@@ -16,17 +16,18 @@
 </head>
 <body>
     <div class="layout-container">
-
-        {% block header %}
-        <header class="layout-header">
-            <h1 class="site-title">Blog Boutique</h1>
-            <nav class="site-nav">
-                <a href="{% url 'pages:vino_list' %}">Inicio</a>
-                <a href="{% url 'about' %}">Sobre mí</a>
-                <a href="{% url 'accounts:profile' %}">Perfil</a>
-            </nav>
-        </header>
-        {% endblock %}
+{% block header %}
+<header class="layout-header">
+    <h1 class="site-title">Blog Boutique</h1>
+    {% if user.is_authenticated %}
+    <nav class="site-nav">
+        <a href="{% url 'pages:vino_list' %}">Inicio</a>
+        <a href="{% url 'about' %}">Sobre mí</a>
+        <a href="{% url 'accounts:profile' %}">Perfil</a>
+    </nav>
+    {% endif %}
+</header>
+{% endblock %}
 
         {% block main %}
         <main class="layout-main">

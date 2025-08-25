@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Perfil de Usuario{% endblock %}
+{% block title %}Perfil de Usuario — Blog Boutique{% endblock %}
 
 {% block header %}
 <header class="layout-header boutique-header">
@@ -16,8 +16,20 @@
   <div class="page-meta">
     <strong>Usuario:</strong> {{ user.username }}<br>
     <strong>Email:</strong> {{ user.email }}<br>
-    <strong>Miembro desde:</strong> {{ user.date_joined|date:"d M Y" }}
+    <strong>Miembro desde:</strong> {{ user.date_joined|date:"d M Y" }}<br>
+    {% if profile.bio %}
+      <strong>Bio:</strong> {{ profile.bio }}<br>
+    {% endif %}
+    {% if profile.birth_date %}
+      <strong>Nacimiento:</strong> {{ profile.birth_date|date:"d M Y" }}<br>
+    {% endif %}
   </div>
+
+  {% if profile.image %}
+    <div class="profile-image">
+      <img src="{{ profile.image.url }}" alt="Foto de perfil de {{ user.username }}">
+    </div>
+  {% endif %}
 
   <div class="page-content">
     <p>Pronto podrás editar tu bio, subir una imagen y personalizar tu experiencia boutique.</p>

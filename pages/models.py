@@ -9,7 +9,7 @@ class Vino(models.Model):
     añada = models.DateField()
     notas = RichTextField()
     maridaje = models.TextField()
-    imagen = models.ImageField(upload_to='vinos/')
+    imagen = models.ImageField(upload_to='vinos/', blank=True, null=True)
     slug = models.SlugField(unique=True)
 
     def __str__(self):

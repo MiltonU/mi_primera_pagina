@@ -2,9 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 from .models import Profile
 from messenger.models import Message  # Asegurate de que el modelo se llame exactamente así
+from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 User = get_user_model()
 
@@ -60,3 +64,13 @@ class RegisterView(FormView):
         user = form.save()
         login(self.request, user)
         return super().form_valid(form)
+
+# 🔐 Vista de login con redirección si ya está autenticado
+class BoutiqueLoginView(LoginView):
+    template_name = 'registration/login.html'
+    redirect_authenticated_user = True  # Evita mostrar login si ya está logueado
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse_lazy('pages:vino_list'))  # Redirige a la home boutique
+        return super().dispatch(request, *args, **kwargs)
