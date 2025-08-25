@@ -2,6 +2,10 @@
 
 {% block title %}{{ title|default:"Ficha de Vino" }}{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pages/css/vino_detail.css' %}">
+{% endblock %}
+
 {% block header %}
 <header class="layout-header boutique-header">
   <h1 class="boutique-title">{{ vino.nombre }} — {{ vino.varietal }}</h1>
@@ -9,19 +13,22 @@
 {% endblock %}
 
 {% block content %}
-<section class="vino-detail">
-  <div class="vino-detail-card">
-    <div class="vino-detail-img-wrapper">
-      <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-detail-img">
-    </div>
+<section class="vino-detail boutique-container">
+  <article class="vino-detail-card fade-in-card">
+    <figure class="vino-detail-img-wrapper">
+      <img src="{{ vino.imagen.url }}" alt="Imagen de {{ vino.nombre }}" class="vino-detail-img">
+    </figure>
 
-    <div class="vino-detail-info">
-      <h2 class="vino-detail-title">{{ vino.nombre }} <span class="vino-añada">({{ vino.añada }})</span></h2>
+    <section class="vino-detail-info">
+      <h2 class="vino-detail-title">
+        {{ vino.nombre }}
+        <span class="vino-añada">({{ vino.añada }})</span>
+      </h2>
       <p class="vino-varietal"><strong>Varietal:</strong> {{ vino.varietal }}</p>
       <p class="vino-notas"><strong>Notas:</strong> {{ vino.notas }}</p>
       <p class="vino-maridaje"><strong>Maridaje:</strong> {{ vino.maridaje }}</p>
-    </div>
-  </div>
+    </section>
+  </article>
 
   <div class="vino-back-link">
     <a href="{% url 'pages:vino_list' %}" class="btn-back">← Volver a la selección</a>

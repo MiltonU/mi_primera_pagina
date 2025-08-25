@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}{{ title|default:"Bienvenido a la experiencia boutique" }}{% endblock %}
+{% block title %}Verificación de Edad{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
 {% block header %}
 <header class="layout-header boutique-header">
@@ -9,21 +14,14 @@
 {% endblock %}
 
 {% block content %}
-<section class="home-form">
-  <h2 class="form-heading">¿Tenés edad suficiente para explorar?</h2>
-  <p class="form-subtext">Ingresá tu edad para acceder a nuestra selección sensorial de vinos artesanales.</p>
+<section class="verificacion-boutique">
+  <h2 class="verificacion-pregunta">¿Sos mayor de edad?</h2>
+  <p class="verificacion-subtexto">Esta selección sensorial está destinada a mayores de 18 años.</p>
 
-  <form method="post" class="age-form">
+  <form method="post" class="verificacion-form">
     {% csrf_token %}
-    <label for="edad">Edad:</label>
-    <input type="number" name="edad" id="edad" min="0" required placeholder="Ej. 25">
-    <button type="submit" class="btn">Ingresar</button>
+    <button type="submit" name="respuesta" value="si" class="btn boutique-btn">Sí</button>
+    <button type="submit" name="respuesta" value="no" class="btn boutique-btn-negativo">No</button>
   </form>
-
-  {% if error %}
-    <div class="error-msg">
-      <p>{{ error }}</p>
-    </div>
-  {% endif %}
 </section>
 {% endblock %}

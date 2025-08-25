@@ -1,0 +1,86 @@
+/* Contenedor general */
+.boutique-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Georgia', serif;
+  color: #2c2c2c;
+  background-color: #faf8f5;
+}
+
+/* Tarjeta principal */
+.vino-detail-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 2rem;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Imagen */
+.vino-detail-img-wrapper {
+  flex: 1 1 300px;
+  text-align: center;
+}
+
+.vino-detail-img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Información */
+.vino-detail-info {
+  flex: 2 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.vino-detail-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #7b3e19;
+}
+
+.vino-añada {
+  font-size: 1.2rem;
+  color: #a67c52;
+}
+
+.vino-varietal,
+.vino-notas,
+.vino-maridaje {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+/* Botón de regreso */
+.vino-back-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #7b3e19;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+  background-color: #a67c52;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

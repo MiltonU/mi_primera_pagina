@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ title|default:"Vinos Boutique" }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pages/css/vino_list.css' %}">
+{% endblock %}
 
 {% block header %}
 <header class="layout-header boutique-header">
@@ -13,16 +18,19 @@
   {% if vinos %}
     <div class="vino-grid">
       {% for vino in vinos %}
-        <div class="vino-card">
-          <div class="vino-img-wrapper">
+        <article class="vino-card fade-in-card">
+          <figure class="vino-img-wrapper">
             <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-img">
-          </div>
-          <div class="vino-info">
-            <h2 class="vino-title">{{ vino.nombre }} <span class="vino-añada">({{ vino.añada }})</span></h2>
+          </figure>
+          <section class="vino-info">
+            <h2 class="vino-title">
+              {{ vino.nombre }}
+              <span class="vino-añada">({{ vino.añada }})</span>
+            </h2>
             <p class="vino-varietal">{{ vino.varietal }}</p>
             <a href="{% url 'pages:vino_detail' vino.slug %}" class="vino-link">Leer más</a>
-          </div>
-        </div>
+          </section>
+        </article>
       {% endfor %}
     </div>
   {% else %}

@@ -12,6 +12,11 @@ class VinoListView(ListView):
     context_object_name = 'vinos'
     extra_context = {'title': 'Selección Boutique'}
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.session.get('mayor_edad'):
+            return redirect('home')  # o 'verificar_edad' si lo separás
+        return super().dispatch(request, *args, **kwargs)
+    
 class VinoDetailView(DetailView):
     model = Vino
     template_name = 'pages/vino_detail.html'
