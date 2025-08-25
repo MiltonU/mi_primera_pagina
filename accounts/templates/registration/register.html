@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Registro Boutique{% endblock %}
+
+{% block content %}
+<section class="registro-sensorial">
+  <header class="registro-header">
+    <h1>Crear cuenta</h1>
+    <p>Accedé a tu espacio personal con atmósfera editorial.</p>
+  </header>
+
+  <form method="post" class="registro-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Registrarme</button>
+  </form>
+
+  <footer class="registro-footer">
+    <p>¿Ya tenés cuenta?
+      <a href="{% url 'accounts:login' %}">Iniciá sesión acá</a>
+    </p>
+  </footer>
+</section>
+{% endblock %}

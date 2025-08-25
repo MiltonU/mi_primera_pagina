@@ -1,6 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView, TemplateView
-from django.contrib.auth import get_user_model
+from django.views.generic import DetailView, ListView, TemplateView, FormView
+from django.contrib.auth import get_user_model, login
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
 from .models import Profile
 from messenger.models import Message  # Asegurate de que el modelo se llame exactamente así
 
@@ -47,3 +49,14 @@ class SettingsView(LoginRequiredMixin, TemplateView):
         'title': 'Configuración',
         'subtitle': 'Ajustes sensoriales de tu cuenta'
     }
+
+# 📝 Vista de registro boutique
+class RegisterView(FormView):
+    template_name = 'registration/register.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('accounts:profile')  # Redirige al perfil sensorial
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return super().form_valid(form)

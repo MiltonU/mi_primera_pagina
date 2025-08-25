@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<section class="login-sensorial">
+  <h1>Bienvenido de nuevo</h1>
+  <p>Ingresá a tu espacio boutique.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Entrar</button>
+  </form>
+
+  <p class="registro-link">
+    ¿No tenés cuenta?
+    <a href="{% url 'accounts:register' %}">Registrate acá</a>
+  </p>
+</section>
+{% endblock %}
