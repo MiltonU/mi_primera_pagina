@@ -1,8 +1,25 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import redirect
 from .models import Page, Vino
+from django.views.generic import TemplateView
+
+class ContactView(TemplateView):
+    template_name = 'pages/contact.html'
+    extra_context = {
+        'title': 'Contacto',
+        'show_navbar': True
+    }
+
+class AboutView(TemplateView):
+    template_name = 'pages/about.html'
+    extra_context = {
+        'title': 'Sobre mí',
+        'show_navbar': True,  # Cambiá a False si querés una vista más íntima
+        'description': 'Este proyecto nace de la obsesión por la modularidad, la estética editorial y la experiencia de usuario premium. Cada vista, cada template, respira intención y atmósfera.'
+    }
+
 
 # 🍷 Vistas sensoriales para el modelo Vino
 
@@ -12,35 +29,52 @@ class VinoListView(ListView):
     context_object_name = 'vinos'
     extra_context = {'title': 'Selección Boutique'}
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_navbar'] = True  # Navbar visible solo en esta vista
+        return context
+
     def dispatch(self, request, *args, **kwargs):
         if not request.session.get('mayor_edad'):
             return redirect('home')  # o 'verificar_edad' si lo separás
         return super().dispatch(request, *args, **kwargs)
-    
+
 class VinoDetailView(DetailView):
     model = Vino
     template_name = 'pages/vino_detail.html'
-    extra_context = {'title': 'Ficha de Vino'}
+    extra_context = {
+        'title': 'Ficha de Vino',
+        'show_navbar': False
+    }
 
 class VinoCreateView(LoginRequiredMixin, CreateView):
     model = Vino
     fields = ['nombre', 'varietal', 'añada', 'notas', 'maridaje', 'imagen', 'slug']
     template_name = 'pages/vino_form.html'
     success_url = reverse_lazy('pages:vino_list')
-    extra_context = {'title': 'Nuevo Vino'}
+    extra_context = {
+        'title': 'Nuevo Vino',
+        'show_navbar': False
+    }
 
 class VinoUpdateView(LoginRequiredMixin, UpdateView):
     model = Vino
     fields = ['nombre', 'varietal', 'añada', 'notas', 'maridaje', 'imagen', 'slug']
     template_name = 'pages/vino_form.html'
     success_url = reverse_lazy('pages:vino_list')
-    extra_context = {'title': 'Editar Vino'}
+    extra_context = {
+        'title': 'Editar Vino',
+        'show_navbar': False
+    }
 
 class VinoDeleteView(LoginRequiredMixin, DeleteView):
     model = Vino
     template_name = 'pages/vino_confirm_delete.html'
     success_url = reverse_lazy('pages:vino_list')
-    extra_context = {'title': 'Eliminar Vino'}
+    extra_context = {
+        'title': 'Eliminar Vino',
+        'show_navbar': False
+    }
 
 # 📄 Vistas narrativas para el modelo Page
 
@@ -49,7 +83,10 @@ class PageListView(LoginRequiredMixin, ListView):
     template_name = 'pages/page_list.html'
     context_object_name = 'pages'
     paginate_by = 6
-    extra_context = {'title': 'Mis Publicaciones'}
+    extra_context = {
+        'title': 'Mis Publicaciones',
+        'show_navbar': False
+    }
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -60,14 +97,20 @@ class PageDetailView(LoginRequiredMixin, DetailView):
     model = Page
     template_name = 'pages/page_detail.html'
     context_object_name = 'page'
-    extra_context = {'title': 'Detalle de Publicación'}
+    extra_context = {
+        'title': 'Detalle de Publicación',
+        'show_navbar': False
+    }
 
 class PageCreateView(LoginRequiredMixin, CreateView):
     model = Page
     template_name = 'pages/page_form.html'
     fields = ['title', 'content', 'image']
     success_url = reverse_lazy('pages:page_list')
-    extra_context = {'title': 'Nueva Publicación'}
+    extra_context = {
+        'title': 'Nueva Publicación',
+        'show_navbar': False
+    }
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -78,10 +121,16 @@ class PageUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'pages/page_form.html'
     fields = ['title', 'content', 'image']
     success_url = reverse_lazy('pages:page_list')
-    extra_context = {'title': 'Editar Publicación'}
+    extra_context = {
+        'title': 'Editar Publicación',
+        'show_navbar': False
+    }
 
 class PageDeleteView(LoginRequiredMixin, DeleteView):
     model = Page
     template_name = 'pages/page_confirm_delete.html'
     success_url = reverse_lazy('pages:page_list')
-    extra_context = {'title': 'Eliminar Publicación'}
+    extra_context = {
+        'title': 'Eliminar Publicación',
+        'show_navbar': False
+    }

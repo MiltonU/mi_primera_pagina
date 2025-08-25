@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Acceso Denegado — Blog Boutique{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/denegado.css' %}">
+{% endblock %}
+
+{% block header %}
+<header class="layout-header boutique-header">
+  <h1 class="boutique-title">Acceso restringido</h1>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="denegado-wrapper">
+  <h2 class="denegado-mensaje">Esta experiencia está reservada para mayores de edad</h2>
+  <p class="denegado-subtexto">Te invitamos a explorar otros espacios sensoriales del sitio.</p>
+
+  <a href="{% url 'about' %}" class="btn boutique-btn">Conocé más sobre el proyecto</a>
+</section>
+{% endblock %}

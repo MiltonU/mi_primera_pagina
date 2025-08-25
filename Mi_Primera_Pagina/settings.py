@@ -129,7 +129,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_REDIRECT_URL = '/pages/vinos/'  # Ajustá según tu ruta real
 LOGOUT_REDIRECT_URL = '/'
 
 

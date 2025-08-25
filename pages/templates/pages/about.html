@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="about-container" style="max-width: 800px; margin: auto; padding: 2rem;">
+  <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem;">{{ title }}</h1>
+  <p style="font-size: 1.2rem; line-height: 1.8; color: #444;">
+    {{ description }}
+  </p>
+
+  <hr style="margin: 2rem 0;">
+
+  <section style="font-size: 1rem; color: #666;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🧠 Visión</h2>
+    <p>
+      Este sitio fue diseñado como un laboratorio sensorial, donde cada componente se valida antes de integrarse. Nada está puesto al azar: cada bloque, cada transición, cada sombra tiene propósito.
+    </p>
+
+    <h2 style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 0.5rem;">🎯 Objetivo</h2>
+    <p>
+      Entregar una experiencia académica y estética que cumpla con todos los requisitos funcionales sin sacrificar la atmósfera boutique. Modularidad, narrativa y jerarquía visual son pilares.
+    </p>
+  </section>
+</div>
+{% endblock %}
