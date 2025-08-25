@@ -1,3 +1,109 @@
+/* 🌿 Tipografía y base */
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background-color: #fdfaf6;
+  color: #3a2c2c;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2 {
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: #7b3f00;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #a65c00;
+}
+
+/* 🍷 Fichas de vino */
+.vino-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.vino-card {
+  background-color: #fffaf3;
+  border: 1px solid #e0d6c6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.vino-card:hover {
+  transform: translateY(-4px);
+}
+
+.vino-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* 🧾 Detalle de vino */
+.vino-detail-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #fffdf8;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.vino-detail-img-wrapper {
+  flex: 1 1 300px;
+}
+
+.vino-detail-img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.vino-detail-info {
+  flex: 2 1 400px;
+}
+
+.vino-detail-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.vino-varietal,
+.vino-notas,
+.vino-maridaje {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* 🔙 Botón de retorno */
+.btn-back,
+.btn-sensorial {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #7b3f00;
+  color: #fff;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-back:hover,
+.btn-sensorial:hover {
+  background-color: #a65c00;
+}
+
+/* 📄 Estilo para páginas */
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -28,4 +134,74 @@
 .page-content {
   line-height: 1.8;
   font-size: 1.1rem;
+}
+
+/* ✨ Animación sensorial */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-wrapper {
+  animation: fadeInUp 0.6s ease-out;
+  padding: 2rem;
+  background-color: #fffdf8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* 🧠 Formulario de edad */
+.home-form {
+  padding: 2rem;
+  background-color: #fffaf3;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  max-width: 500px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.home-form h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.home-form p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.age-form input[type="number"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.age-form .btn {
+  background-color: #7b3f00;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.age-form .btn:hover {
+  background-color: #a65c00;
+}
+
+.error-msg {
+  margin-top: 1rem;
+  color: #b30000;
+  font-weight: 600;
 }

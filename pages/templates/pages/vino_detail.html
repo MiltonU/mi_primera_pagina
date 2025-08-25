@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
-{% block title %}Vinos Boutique{% endblock %}
-{% block content %}
-  <h1>Vinos disponibles</h1>
 
-  {% if vinos %}
-    <div class="vino-grid">
-      {% for vino in vinos %}
-        <div class="vino-card">
-          <h2>{{ vino.nombre }} ({{ vino.añada }})</h2>
-          <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-img">
-          <p>{{ vino.varietal }}</p>
-          <a href="{% url 'vino_detail' vino.slug %}">Leer más</a>
-        </div>
-      {% endfor %}
+{% block title %}{{ title|default:"Ficha de Vino" }}{% endblock %}
+
+{% block header %}
+<header class="layout-header boutique-header">
+  <h1 class="boutique-title">{{ vino.nombre }} — {{ vino.varietal }}</h1>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="vino-detail">
+  <div class="vino-detail-card">
+    <div class="vino-detail-img-wrapper">
+      <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-detail-img">
     </div>
-  {% else %}
-    <p>No hay vinos aún.</p>
-  {% endif %}
+
+    <div class="vino-detail-info">
+      <h2 class="vino-detail-title">{{ vino.nombre }} <span class="vino-añada">({{ vino.añada }})</span></h2>
+      <p class="vino-varietal"><strong>Varietal:</strong> {{ vino.varietal }}</p>
+      <p class="vino-notas"><strong>Notas:</strong> {{ vino.notas }}</p>
+      <p class="vino-maridaje"><strong>Maridaje:</strong> {{ vino.maridaje }}</p>
+    </div>
+  </div>
+
+  <div class="vino-back-link">
+    <a href="{% url 'pages:vino_list' %}" class="btn-back">← Volver a la selección</a>
+  </div>
+</section>
 {% endblock %}

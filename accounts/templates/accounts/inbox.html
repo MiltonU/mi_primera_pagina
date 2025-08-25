@@ -1,13 +1,33 @@
 {% extends 'base.html' %}
-{% block title %}Tu espacio personal{% endblock %}
+
+{% block title %}{{ title|default:"Tu espacio personal" }}{% endblock %}
+
+{% block header %}
+<header class="layout-header boutique-header">
+  <h1 class="boutique-title">Bienvenido, {{ user.first_name|default:user.username }}</h1>
+</header>
+{% endblock %}
 
 {% block content %}
-  <section class="inbox">
-    <h1>Bienvenido, {{ user.username }}</h1>
-    <p>Este es tu espacio boutique. Acá podés revisar tus datos, editar tu perfil o gestionar tus mensajes.</p>
-    <div class="actions">
-      <a href="{% url 'profile_edit' %}" class="btn">Editar perfil</a>
-      <a href="{% url 'password_change' %}" class="btn">Cambiar contraseña</a>
-    </div>
-  </section>
+<section class="page-wrapper">
+  <h2 class="page-title">Tu bandeja sensorial</h2>
+  <p class="page-subtitle">Acá podés revisar tus datos, editar tu perfil o gestionar tus mensajes.</p>
+
+  <div class="page-meta">
+    <strong>Usuario:</strong> {{ user.username }}<br>
+    <strong>Email:</strong> {{ user.email }}<br>
+    <strong>Miembro desde:</strong> {{ user.date_joined|date:"d M Y" }}
+  </div>
+
+  <div class="actions">
+    <a href="{% url 'profile_edit' %}" class="btn-sensorial">Editar perfil</a>
+    <a href="{% url 'password_change' %}" class="btn-sensorial">Cambiar contraseña</a>
+  </div>
+
+  <div class="page-content">
+    <p>Pronto vas a poder recibir mensajes, notificaciones y conectar con otros perfiles boutique.</p>
+  </div>
+
+  <a href="{% url 'home' %}" class="btn-back">← Volver al inicio</a>
+</section>
 {% endblock %}

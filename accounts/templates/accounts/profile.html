@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block header %}
+<header class="layout-header boutique-header">
+  <h1 class="boutique-title">Bienvenido, {{ user.first_name|default:user.username }}</h1>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="page-wrapper">
+  <h2 class="page-title">Tu perfil sensorial</h2>
+  <p class="page-subtitle">Espacio personal para explorar, publicar y conectar</p>
+
+  <div class="page-meta">
+    <strong>Usuario:</strong> {{ user.username }}<br>
+    <strong>Email:</strong> {{ user.email }}<br>
+    <strong>Miembro desde:</strong> {{ user.date_joined|date:"d M Y" }}
+  </div>
+
+  <div class="page-content">
+    <p>Pronto podrás editar tu bio, subir una imagen y personalizar tu experiencia boutique.</p>
+  </div>
+
+  <a href="{% url 'home' %}" class="btn-sensorial">← Volver al inicio</a>
+</section>
+{% endblock %}

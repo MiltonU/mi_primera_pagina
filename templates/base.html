@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-   
+    <link rel="stylesheet" href="{% static 'css/boutique.css' %}">
     <meta charset="UTF-8">
     <title>{% block title %}Blog Boutique{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
+    
+    <!-- Estilos base -->
     <link rel="stylesheet" href="{% static 'pages/css/pages.css' %}">
     <link rel="stylesheet" href="{% static 'mi_primera_app/css/home.css' %}">
+    
+    <!-- Estilos extra por template -->
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <div class="layout-container">
+        
+        {% block header %}
         <header class="layout-header">
             <h1 class="site-title">Blog Boutique</h1>
             <nav class="site-nav">
@@ -19,14 +26,23 @@
                 <a href="{% url 'accounts:profile' %}">Perfil</a>
             </nav>
         </header>
-
+        {% endblock %}
+        
+        {% block main %}
         <main class="layout-main">
             {% block content %}{% endblock %}
         </main>
-
+        {% endblock %}
+        
+        {% block footer %}
         <footer class="layout-footer">
             <p>&copy; {{ now|date:"Y" }} — Narrativa sensorial por Milton</p>
         </footer>
+        {% endblock %}
+        
     </div>
+
+    <!-- Scripts extra por template -->
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

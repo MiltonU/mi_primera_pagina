@@ -1,21 +1,29 @@
 {% extends "base.html" %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <article class="page-detail">
-    <header class="mb-4">
-      <h1 class="display-5">{{ page.title }}</h1>
+<div class="container boutique-container mt-5">
+  <article class="page-detail boutique-article">
+    <header class="page-header mb-5">
+      <h1 class="page-title display-4">{{ page.title }}</h1>
       {% if page.image %}
-        <img src="{{ page.image.url }}" class="img-fluid rounded mt-3" alt="{{ page.title }}">
+        <figure class="page-image mt-4">
+          <img src="{{ page.image.url }}" class="img-fluid rounded shadow-sm" alt="Imagen de {{ page.title }}">
+          {% if page.caption %}
+            <figcaption class="text-muted small mt-2">{{ page.caption }}</figcaption>
+          {% endif %}
+        </figure>
       {% endif %}
     </header>
 
-    <section class="mb-5">
-      <div class="rich-content">
+    <section class="page-body mb-5">
+      <div class="rich-content boutique-content">
         {{ page.content|safe }}
       </div>
     </section>
 
-    <footer class="d-flex justify-content-between align-items-center text-muted small">
+    <footer class="page-footer d-flex justify-content-between align-items-center text-muted small border-top pt-3">
       <span>Publicado el {{ page.created_at|date:"d M Y" }}</span>
       <a href="{% url 'pages:list' %}" class="btn btn-sm btn-outline-secondary">← Volver al catálogo</a>
     </footer>

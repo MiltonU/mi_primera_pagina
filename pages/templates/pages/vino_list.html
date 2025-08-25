@@ -1,20 +1,32 @@
 {% extends 'base.html' %}
-{% block title %}Vinos Boutique{% endblock %}
-{% block content %}
-  <h1>Vinos disponibles</h1>
 
+{% block title %}{{ title|default:"Vinos Boutique" }}{% endblock %}
+
+{% block header %}
+<header class="layout-header boutique-header">
+  <h1 class="boutique-title">Selección sensorial de vinos artesanales</h1>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="vino-section">
   {% if vinos %}
     <div class="vino-grid">
       {% for vino in vinos %}
         <div class="vino-card">
-          <h2>{{ vino.nombre }} ({{ vino.añada }})</h2>
-          <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-img">
-          <p>{{ vino.varietal }}</p>
-          <a href="{% url 'vino_detail' vino.slug %}">Leer más</a>
+          <div class="vino-img-wrapper">
+            <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-img">
+          </div>
+          <div class="vino-info">
+            <h2 class="vino-title">{{ vino.nombre }} <span class="vino-añada">({{ vino.añada }})</span></h2>
+            <p class="vino-varietal">{{ vino.varietal }}</p>
+            <a href="{% url 'pages:vino_detail' vino.slug %}" class="vino-link">Leer más</a>
+          </div>
         </div>
       {% endfor %}
     </div>
   {% else %}
-    <p>No hay vinos aún.</p>
+    <p class="no-vinos-msg">No hay vinos aún. Pronto llegará la cosecha boutique.</p>
   {% endif %}
+</section>
 {% endblock %}

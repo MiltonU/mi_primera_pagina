@@ -1,13 +1,54 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %}{{ title|default:"Mis Publicaciones" }}{% endblock %}
+
+{% block header %}
+<header class="layout-header boutique-header">
+  <h1 class="boutique-title">Catálogo de publicaciones</h1>
+</header>
+{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4">Explorá las fichas</h2>
-  <div class="row">
-    {% for page in pages %}
-      {% include "pages/components/card.html" with page=page %}
-    {% empty %}
-      <p class="text-muted">Aún no hay fichas publicadas.</p>
-    {% endfor %}
-  </div>
-</div>
+<section class="page-list boutique-container">
+  {% if pages %}
+    <div class="page-grid">
+      {% for page in pages %}
+        <article class="page-card">
+          <header>
+            <h2 class="page-title">{{ page.title }}</h2>
+            <p class="page-meta">Publicado el {{ page.created_at|date:"d M Y" }}</p>
+          </header>
+
+          {% if page.image %}
+            <div class="page-thumb">
+              <img src="{{ page.image.url }}" alt="Imagen de {{ page.title }}">
+            </div>
+          {% endif %}
+
+          <div class="page-excerpt">
+            {{ page.content|truncatewords:30 }}
+          </div>
+
+          <footer>
+            <a href="{% url 'pages:page_detail' page.pk %}" class="btn-sensorial">Leer más</a>
+          </footer>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+      <nav class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}">← Anterior</a>
+        {% endif %}
+        <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Siguiente →</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="no-pages-msg">Aún no hay publicaciones. Animate a crear tu primera ficha sensorial.</p>
+  {% endif %}
+</section>
 {% endblock %}

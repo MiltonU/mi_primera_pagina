@@ -1,15 +1,25 @@
-<div class="col-md-4 mb-4">
-  <div class="card h-100 shadow-sm">
-    {% if page.image %}
-      <img src="{{ page.image.url }}" class="card-img-top" alt="{{ page.title }}">
-    {% endif %}
-    <div class="card-body">
-      <h5 class="card-title">{{ page.title }}</h5>
-      <p class="card-text">{{ page.content|truncatewords:30 }}</p>
-      <a href="{% url 'pages:detail' page.pk %}" class="btn btn-outline-primary">Ver más</a>
+<div class="row boutique-cards">
+  {% for page in pages %}
+    <div class="col-md-4 mb-4">
+      <div class="card boutique-card h-100">
+        {% if page.image %}
+          <div class="card-img-wrapper">
+            <img src="{{ page.image.url }}" class="card-img-top" alt="Imagen de {{ page.title }}">
+          </div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title boutique-title">{{ page.title }}</h5>
+          <p class="card-text boutique-excerpt">{{ page.content|truncatewords:30 }}</p>
+          <a href="{% url 'pages:detail' page.pk %}" class="btn btn-sensorial">Ver más</a>
+        </div>
+        <div class="card-footer boutique-footer">
+          <small>Publicado el {{ page.created_at|date:"d M Y" }}</small>
+        </div>
+      </div>
     </div>
-    <div class="card-footer text-muted small">
-      Publicado el {{ page.created_at|date:"d M Y" }}
+  {% empty %}
+    <div class="col-12">
+      <p class="text-muted boutique-empty">Aún no hay fichas publicadas. Animate a crear la primera pieza sensorial.</p>
     </div>
-  </div>
+  {% endfor %}
 </div>
