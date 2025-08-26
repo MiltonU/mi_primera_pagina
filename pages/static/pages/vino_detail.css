@@ -84,3 +84,46 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.vino-detail-card {
+  background-color: #f8f4f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.vino-detail-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.vino-detail-img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.vino-detail-data dt {
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #3c3c3c;
+}
+
+.vino-detail-data dd {
+  margin-left: 0;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+  color: #555;
+}
+
+.btn-back {
+  color: #800000;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+  color: #a00000;
+}

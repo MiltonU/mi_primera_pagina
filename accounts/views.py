@@ -1,18 +1,21 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView, TemplateView, FormView
+from django.views.generic import DetailView, ListView, TemplateView, FormView, View
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
-from .models import Profile
-from messenger.models import Message  # Asegurate de que el modelo se llame exactamente así
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, render
+from django.views.generic.edit import UpdateView
+from django.contrib.auth.models import User
 from django.http import Http404
+from .models import Profile
+from .forms import UserForm, ProfileForm
+from messenger.models import Message  # Asegurate de que el modelo se llame exactamente así
 
 User = get_user_model()
 
 # 👤 Vista sensorial del perfil de usuario
+
 class ProfileView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'accounts/profile.html'
@@ -24,6 +27,38 @@ class ProfileView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user.profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mensajes_recibidos'] = Message.objects.filter(
+            recipient=self.request.user
+        ).order_by('-sent_at')[:5]  # Mostramos los 5 más recientes
+        return context
+
+
+# 🛠 Vista combinada para editar datos de usuario y perfil sensorial
+class EditarPerfilView(LoginRequiredMixin, View):
+    def get(self, request):
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+        return render(request, 'accounts/editar_perfil.html', {
+            'user_form': user_form,
+            'profile_form': profile_form
+        })
+
+    def post(self, request):
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('accounts:profile')
+
+        return render(request, 'accounts/editar_perfil.html', {
+            'user_form': user_form,
+            'profile_form': profile_form
+        })
 
 # 💬 Vista de bandeja de entrada (mensajería interna)
 class InboxView(LoginRequiredMixin, ListView):

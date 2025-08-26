@@ -1,6 +1,13 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
-from .views import ProfileView, InboxView, RegisterView, BoutiqueLoginView  # 👈 Importamos la vista boutique
+from django.contrib.auth.views import LogoutView
+from .views import EditarPerfilView
+from .views import (
+    ProfileView,
+    InboxView,
+    RegisterView,
+    BoutiqueLoginView,
+    
+)
 
 app_name = 'accounts'
 
@@ -11,10 +18,14 @@ urlpatterns = [
     # 💬 Bandeja de entrada boutique
     path('', InboxView.as_view(), name='inbox'),
 
-    # 🔐 Login y logout con templates personalizados
-    path('login/', BoutiqueLoginView.as_view(), name='login'),  # 👈 Usamos la vista que redirige si ya está logueado
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    # 🔐 Login con redirección si ya está logueado
+    path('login/', BoutiqueLoginView.as_view(), name='login'),
+
+    # 🔓 Logout con redirección al home boutique
+    path('logout/', LogoutView.as_view(next_page='pages:vino_list'), name='logout'),
 
     # 📝 Registro de nuevos usuarios
     path('registro/', RegisterView.as_view(), name='register'),
+
+    path('editar/', EditarPerfilView.as_view(), name='editar_perfil'),
 ]

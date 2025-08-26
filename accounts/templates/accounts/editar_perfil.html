@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Editar Perfil Boutique{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h1 class="display-4">Editar tu perfil sensorial</h1>
+    <p class="lead">Actualizá tus datos sin perder la atmósfera boutique</p>
+  </section>
+
+  <form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+    {% csrf_token %}
+
+    {% include "accounts/includes/form_user.html" %}
+    {% include "accounts/includes/form_profile.html" %}
+
+    <button type="submit" class="btn btn-outline-dark mt-3">Guardar cambios</button>
+    <a href="{% url 'accounts:profile' %}" class="btn btn-link mt-3">← Volver al perfil</a>
+  </form>
+</main>
+{% endblock %}

@@ -1,40 +1,36 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
 
-{% block title %}{{ title|default:"Vinos Boutique" }}{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'pages/css/vino_list.css' %}">
-{% endblock %}
-
-{% block header %}
-<header class="layout-header boutique-header">
-  <h1 class="boutique-title">Selección sensorial de vinos artesanales</h1>
-</header>
-{% endblock %}
+{% block title %}Selección Boutique{% endblock %}
 
 {% block content %}
-<section class="vino-section">
-  {% if vinos %}
-    <div class="vino-grid">
-      {% for vino in vinos %}
-        <article class="vino-card fade-in-card">
-          <figure class="vino-img-wrapper">
-            <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="vino-img">
-          </figure>
-          <section class="vino-info">
-            <h2 class="vino-title">
-              {{ vino.nombre }}
-              <span class="vino-añada">({{ vino.añada }})</span>
-            </h2>
-            <p class="vino-varietal">{{ vino.varietal }}</p>
-            <a href="{% url 'pages:vino_detail' vino.slug %}" class="vino-link">Leer más</a>
-          </section>
-        </article>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="no-vinos-msg">No hay vinos aún. Pronto llegará la cosecha boutique.</p>
-  {% endif %}
-</section>
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h1 class="display-4">Selección Boutique</h1>
+    <p class="lead">Vinos curados con narrativa sensorial, maridajes y atmósfera editorial.</p>
+
+      </section>
+
+  <section class="row">
+    {% for vino in vinos %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          {% if vino.imagen %}
+            <img src="{{ vino.imagen.url }}" class="card-img-top" alt="{{ vino.nombre }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ vino.nombre }} ({{ vino.añada }})</h5>
+            <p class="card-text"><strong>Varietal:</strong> {{ vino.varietal }}</p>
+            <p class="card-text"><strong>Notas:</strong> {{ vino.notas|truncatewords:20 }}</p>
+            <p class="card-text"><strong>Maridaje:</strong> {{ vino.maridaje }}</p>
+            <a href="{% url 'pages:vino_detail' vino.slug %}" class="btn btn-outline-dark">Ver ficha</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center">
+        <p class="text-muted">No hay vinos disponibles aún.</p>
+      </div>
+    {% endfor %}
+  </section>
+</main>
 {% endblock %}

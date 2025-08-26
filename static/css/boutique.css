@@ -204,3 +204,15 @@ body {
   padding: 2rem;
   color: #999;
 }
+.nav-logout {
+  color: #800000;
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.nav-logout:hover {
+  color: #a00000;
+}

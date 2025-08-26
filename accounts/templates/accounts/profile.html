@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Perfil de Usuario — Blog Boutique{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
+{% endblock %}
 
 {% block header %}
 <header class="layout-header boutique-header">
@@ -17,24 +22,51 @@
     <strong>Usuario:</strong> {{ user.username }}<br>
     <strong>Email:</strong> {{ user.email }}<br>
     <strong>Miembro desde:</strong> {{ user.date_joined|date:"d M Y" }}<br>
+
     {% if profile.bio %}
       <strong>Bio:</strong> {{ profile.bio }}<br>
     {% endif %}
     {% if profile.birth_date %}
       <strong>Nacimiento:</strong> {{ profile.birth_date|date:"d M Y" }}<br>
     {% endif %}
+    {% if profile.preferencias %}
+      <strong>Preferencias:</strong> {{ profile.preferencias }}<br>
+    {% endif %}
   </div>
 
-  {% if profile.image %}
-    <div class="profile-image">
-      <img src="{{ profile.image.url }}" alt="Foto de perfil de {{ user.username }}">
+  {% if profile.avatar %}
+    <div class="profile-image mt-3">
+      <img src="{{ profile.avatar.url }}" alt="Foto de perfil de {{ user.username }}">
     </div>
   {% endif %}
 
-  <div class="page-content">
-    <p>Pronto podrás editar tu bio, subir una imagen y personalizar tu experiencia boutique.</p>
+  <section class="mt-5">
+    <h3 class="h5">Últimos mensajes recibidos</h3>
+    {% if mensajes_recibidos %}
+      {% for mensaje in mensajes_recibidos %}
+        <div class="card mb-3 p-3 shadow-sm">
+          <strong>{{ mensaje.subject }}</strong><br>
+          <small class="text-muted">De: {{ mensaje.sender.username }} — {{ mensaje.sent_at|date:"d M Y H:i" }}</small>
+          <p class="mt-2">{{ mensaje.body|truncatewords:20 }}</p>
+          <a href="{% url 'messenger:detalle' mensaje.id %}" class="btn btn-sm btn-outline-dark">Ver completo</a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">No tenés mensajes aún.</p>
+    {% endif %}
+  </section>
+
+  <div class="page-actions mt-4">
+    <a href="{% url 'accounts:editar_perfil' %}" class="btn btn-outline-secondary">Editar perfil</a>
+    <a href="{% url 'accounts:inbox' %}" class="btn btn-outline-dark">Ver mensajes</a>
   </div>
 
-  <a href="{% url 'home' %}" class="btn-sensorial">← Volver al inicio</a>
+  <div class="page-content mt-4">
+    <p>Pronto podrás personalizar tu experiencia boutique con más detalles sensoriales.</p>
+  </div>
+
+  <div class="mt-5">
+    <a href="{% url 'pages:vino_list' %}" class="btn-sensorial">← Volver al inicio</a>
+  </div>
 </section>
 {% endblock %}
