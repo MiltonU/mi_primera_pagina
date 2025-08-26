@@ -1,26 +1,27 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Responder a {{ original_message.sender.username }}{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow-sm">
-    <div class="card-header bg-light">
-      <h4 class="mb-0">Responder a {{ original_message.sender.username }}</h4>
-      <small class="text-muted">Asunto original: {{ original_message.subject }}</small>
-    </div>
-    <div class="card-body">
-      <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="subject" class="form-label">Asunto</label>
-          <input type="text" name="subject" id="subject" class="form-control" value="Re: {{ original_message.subject }}">
-        </div>
-        <div class="mb-3">
-          <label for="body" class="form-label">Mensaje</label>
-          <textarea name="body" id="body" rows="6" class="form-control" placeholder="Escribí tu respuesta con tono editorial..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar respuesta</button>
-        <a href="{% url 'messenger:detail' original_message.pk %}" class="btn btn-outline-secondary ms-2">Cancelar</a>
-      </form>
-    </div>
-  </div>
-</div>
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h2 class="page-title">Responder mensaje</h2>
+    <p class="page-subtitle">Conectá con {{ original_message.sender.username }} desde tu atmósfera sensorial</p>
+  </section>
+
+  <article class="card p-4 shadow-sm mb-4">
+    <h5 class="card-title">Mensaje original</h5>
+    <p><strong>{{ original_message.subject }}</strong></p>
+    <p class="text-muted">De: {{ original_message.sender.username }} — {{ original_message.sent_at|date:"d M Y H:i" }}</p>
+    <p>{{ original_message.body|linebreaks }}</p>
+  </article>
+
+  <form method="post" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-outline-dark mt-3">Enviar respuesta</button>
+    <a href="{% url 'messenger:inbox' %}" class="btn btn-link mt-3">← Volver a la bandeja</a>
+  </form>
+</main>
 {% endblock %}

@@ -1,9 +1,43 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Message
 from .forms import MessageForm
+from django.views import View
+from django.contrib.auth import get_user_model
+from django.contrib import messages
+
+User = get_user_model()
+
+class EnviarMensajeView(View):
+    def get(self, request, user_id):
+        destinatario = get_object_or_404(User, id=user_id)
+        return render(request, 'messenger/enviar_mensaje.html', {
+            'destinatario': destinatario
+        })
+
+    def post(self, request, user_id):
+        destinatario = get_object_or_404(User, id=user_id)
+        subject = request.POST.get('subject')
+        body = request.POST.get('body')
+
+        if subject and body:
+            Message.objects.create(
+                sender=request.user,
+                recipient=destinatario,
+                subject=subject,
+                body=body
+            )
+            messages.success(request, "Mensaje enviado con éxito ✉️")
+            return redirect('accounts:profile')
+
+        messages.error(request, "Faltan campos obligatorios.")
+        return render(request, 'messenger/enviar_mensaje.html', {
+            'destinatario': destinatario,
+            'subject': subject,
+            'body': body
+        })
 
 class InboxView(LoginRequiredMixin, ListView):
     model = Message

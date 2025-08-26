@@ -1,25 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mensaje de {{ message.sender.username }}{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow-sm">
-    <div class="card-header bg-light">
-      <h4 class="mb-0">{{ message.subject }}</h4>
-      <small class="text-muted">De: {{ message.sender.username }} | Recibido: {{ message.sent_at|date:"d M Y H:i" }}</small>
-    </div>
-    <div class="card-body">
+<main class="container py-5">
+  <article class="card p-4 shadow-sm">
+    <h2 class="h4">{{ message.subject }}</h2>
+    <p class="text-muted">De: <strong>{{ message.sender.username }}</strong></p>
+    <p class="text-muted">Recibido el {{ message.sent_at|date:"d M Y H:i" }}</p>
+
+    <hr>
+
+    <div class="message-body">
       <p>{{ message.body|linebreaks }}</p>
     </div>
-    <div class="card-footer d-flex justify-content-between">
-      <a href="{% url 'messenger:inbox' %}" class="btn btn-outline-secondary">← Volver</a>
-      <a href="{% url 'messenger:reply' message.pk %}" class="btn btn-primary">Responder</a>
+
+    <div class="mt-4">
+      <a href="{% url 'messenger:inbox' %}" class="btn btn-outline-secondary">← Volver a la bandeja</a>
+      <a href="{% url 'messenger:reply' message.id %}" class="btn btn-outline-dark">Responder</a>
     </div>
-  </div>
-</div>
-<div class="mt-4">
-  <h5>Perfil de {{ message.sender.username }}</h5>
-  <p>{{ message.sender.profile.bio }}</p>
-  {% if message.sender.profile.avatar %}
-    <img src="{{ message.sender.profile.avatar.url }}" class="img-thumbnail" style="max-height: 100px;">
-  {% endif %}
-</div>
+  </article>
+</main>
 {% endblock %}
