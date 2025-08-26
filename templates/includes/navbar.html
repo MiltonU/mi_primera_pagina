@@ -4,13 +4,24 @@
     <li><a href="{% url 'pages:vino_list' %}">Inicio</a></li>
     <li><a href="{% url 'accounts:profile' %}">Perfil</a></li>
     <li><a href="{% url 'pages:about' %}">Acerca de</a></li>
+
     {% if user.is_authenticated %}
       <li>
-  <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-link nav-logout">Cerrar sesión</button>
-  </form>
-</li>
+        <a href="{% url 'messenger:inbox' %}" class="nav-link">
+          Mensajes
+          {% if mensajes_no_leidos > 0 %}
+            <span class="badge bg-danger" title="Mensajes sin leer">{{ mensajes_no_leidos }}</span>
+          {% endif %}
+        </a>
+      </li>
+      <li>
+        <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-link nav-logout">Cerrar sesión</button>
+        </form>
+      </li>
+    {% else %}
+      <li><a href="{% url 'accounts:login' %}">Iniciar sesión</a></li>
     {% endif %}
   </ul>
 </nav>

@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-    
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Blog Boutique{% endblock %}</title>
-<a href="{% url 'messenger:inbox' %}" class="nav-link">
-  Mensajes
-  {% if mensajes_no_leidos > 0 %}
-    <span class="badge bg-danger">{{ mensajes_no_leidos }}</span>
-  {% endif %}
-</a>
+
     <!-- Estilos base -->
     <link rel="stylesheet" href="{% static 'css/boutique.css' %}">
     <link rel="stylesheet" href="{% static 'pages/css/pages.css' %}">

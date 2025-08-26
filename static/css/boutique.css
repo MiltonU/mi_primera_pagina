@@ -216,3 +216,18 @@ body {
 .nav-logout:hover {
   color: #a00000;
 }
+
+.badge.bg-danger {
+  background-color: #c62828;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.3em 0.6em;
+  border-radius: 12px;
+  margin-left: 6px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
