@@ -1,0 +1,20 @@
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+}
+
+.page-subtitle {
+  font-style: italic;
+  color: #555;
+}
+
+form .form-group label {
+  font-weight: 600;
+  margin-bottom: 0.3em;
+}
+
+form .form-control {
+  border-radius: 6px;
+  padding: 0.5em;
+  font-family: 'Lora', serif;
+}

@@ -1,0 +1,80 @@
+/* Tipografía editorial */
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #fdfaf6;
+  color: #3e3e3e;
+}
+
+h1, h5, .card-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+/* Tarjetas de vino */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Imagen del vino */
+.card-img-top {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  object-fit: cover;
+  max-height: 240px;
+}
+
+/* Botones sensoriales */
+.btn-outline-dark {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-dark:hover {
+  background-color: #212529;
+  color: #fff;
+}
+
+.btn-outline-success {
+  border-radius: 8px;
+  background-color: #eafaf1;
+  color: #198754;
+  border: 1px solid #198754;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-success:hover {
+  background-color: #198754;
+  color: #fff;
+}
+
+/* Filtros */
+form input.form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  font-weight: 500;
+}
+
+/* Separadores narrativos */
+hr {
+  border-top: 1px solid #ddd;
+  margin: 3rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-img-top {
+    max-height: 180px;
+  }
+}

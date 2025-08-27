@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Blog Boutique{% endblock %}</title>
 
+    <!-- Estilos extra por template (debe ir primero para tener prioridad) -->
+    {% block extra_css %}{% endblock %}
+
     <!-- Estilos base -->
     <link rel="stylesheet" href="{% static 'css/boutique.css' %}">
     <link rel="stylesheet" href="{% static 'pages/css/pages.css' %}">
     <link rel="stylesheet" href="{% static 'mi_primera_app/css/home.css' %}">
-
-    <!-- Estilos extra por template -->
-    {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% if show_navbar %}

@@ -1,0 +1,131 @@
+.page-wrapper {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fdfaf6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.page-meta {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.profile-image img {
+  max-width: 200px;
+  border-radius: 50%;
+  margin-top: 1rem;
+}
+
+.page-actions a {
+  margin-right: 1rem;
+}
+
+.btn-sensorial {
+  color: #800000;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn-sensorial:hover {
+  text-decoration: underline;
+  color: #a00000;
+}
+
+form .form-group {
+  margin-bottom: 1rem;
+}
+
+form input, form textarea, form select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Lora', serif;
+}
+
+legend {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+form .form-group {
+  margin-bottom: 1rem;
+}
+
+form input, form textarea, form select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Lora', serif;
+}
+
+legend {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.card {
+  background-color: #fdfaf6;
+  border: 1px solid #e0dcd5;
+  border-radius: 8px;
+}
+
+.card strong {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
+.card p {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+}
+
+.page-subtitle {
+  font-style: italic;
+  color: #555;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+}
+
+legend {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.img-thumbnail {
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+input[type="date"] {
+  font-family: 'Lora', serif;
+  padding: 0.4em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fdfdfd;
+}
