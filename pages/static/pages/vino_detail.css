@@ -127,3 +127,15 @@
   text-decoration: underline;
   color: #a00000;
 }
+
+.richtext {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+img.img-fluid {
+  max-height: 480px;
+  object-fit: cover;
+}

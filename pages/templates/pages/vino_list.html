@@ -7,9 +7,25 @@
   <section class="text-center mb-4">
     <h1 class="display-4">Selección Boutique</h1>
     <p class="lead">Vinos curados con narrativa sensorial, maridajes y atmósfera editorial.</p>
+  </section>
 
-      </section>
+  <!-- 🔍 Filtros sensoriales -->
+ <form method="get" class="row mb-5">
+  <div class="col-md-4">
+    <input type="text" name="varietal" value="{{ varietal }}" class="form-control" placeholder="Varietal">
+  </div>
+  <div class="col-md-4">
+    <input type="number" name="precio_max" value="{{ precio_max }}" class="form-control" placeholder="Precio máximo">
+  </div>
+  <div class="col-md-4">
+    <input type="number" name="añada" value="{{ añada }}" class="form-control" placeholder="Año de cosecha">
+  </div>
+  <div class="col-12 mt-3">
+    <button type="submit" class="btn btn-outline-dark w-100">Filtrar selección</button>
+  </div>
+</form>
 
+  <!-- 🍷 Fichas sensoriales -->
   <section class="row">
     {% for vino in vinos %}
       <div class="col-md-4 mb-4">
@@ -18,8 +34,9 @@
             <img src="{{ vino.imagen.url }}" class="card-img-top" alt="{{ vino.nombre }}">
           {% endif %}
           <div class="card-body">
-            <h5 class="card-title">{{ vino.nombre }} ({{ vino.añada }})</h5>
+            <h5 class="card-title">{{ vino.nombre }} ({{ vino.añada|date:"Y" }})</h5>
             <p class="card-text"><strong>Varietal:</strong> {{ vino.varietal }}</p>
+            <p class="card-text"><strong>Precio:</strong> ${{ vino.precio }}</p>
             <p class="card-text"><strong>Notas:</strong> {{ vino.notas|truncatewords:20 }}</p>
             <p class="card-text"><strong>Maridaje:</strong> {{ vino.maridaje }}</p>
             <a href="{% url 'pages:vino_detail' vino.slug %}" class="btn btn-outline-dark">Ver ficha</a>
@@ -28,7 +45,7 @@
       </div>
     {% empty %}
       <div class="col-12 text-center">
-        <p class="text-muted">No hay vinos disponibles aún.</p>
+        <p class="text-muted">No hay vinos disponibles con esos filtros.</p>
       </div>
     {% endfor %}
   </section>

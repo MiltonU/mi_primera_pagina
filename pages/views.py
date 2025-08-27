@@ -29,15 +29,28 @@ class VinoListView(ListView):
     context_object_name = 'vinos'
     extra_context = {'title': 'Selección Boutique'}
 
+    def get_queryset(self):
+        qs = Vino.objects.all()
+        varietal = self.request.GET.get("varietal")
+        precio_max = self.request.GET.get("precio_max")
+        añada = self.request.GET.get("añada")
+
+        if varietal:
+            qs = qs.filter(varietal__icontains=varietal)
+        if precio_max:
+            qs = qs.filter(precio__lte=precio_max)
+        if añada:
+            qs = qs.filter(añada__year=añada)
+
+        return qs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['show_navbar'] = True  # Navbar visible solo en esta vista
+        context['show_navbar'] = True
+        context['varietal'] = self.request.GET.get("varietal", "")
+        context['precio_max'] = self.request.GET.get("precio_max", "")
+        context['añada'] = self.request.GET.get("añada", "")
         return context
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.session.get('mayor_edad'):
-            return redirect('home')  # o 'verificar_edad' si lo separás
-        return super().dispatch(request, *args, **kwargs)
 
 class VinoDetailView(DetailView):
     model = Vino
@@ -49,7 +62,7 @@ class VinoDetailView(DetailView):
 
 class VinoCreateView(LoginRequiredMixin, CreateView):
     model = Vino
-    fields = ['nombre', 'varietal', 'añada', 'notas', 'maridaje', 'imagen', 'slug']
+    fields = ['nombre', 'varietal', 'añada', 'precio', 'notas', 'maridaje', 'imagen', 'slug']
     template_name = 'pages/vino_form.html'
     success_url = reverse_lazy('pages:vino_list')
     extra_context = {
@@ -59,7 +72,7 @@ class VinoCreateView(LoginRequiredMixin, CreateView):
 
 class VinoUpdateView(LoginRequiredMixin, UpdateView):
     model = Vino
-    fields = ['nombre', 'varietal', 'añada', 'notas', 'maridaje', 'imagen', 'slug']
+    fields = ['nombre', 'varietal', 'añada', 'precio', 'notas', 'maridaje', 'imagen', 'slug']
     template_name = 'pages/vino_form.html'
     success_url = reverse_lazy('pages:vino_list')
     extra_context = {

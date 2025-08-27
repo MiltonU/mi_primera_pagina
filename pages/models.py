@@ -7,6 +7,7 @@ class Vino(models.Model):
     nombre = models.CharField(max_length=100)
     varietal = models.CharField(max_length=100)
     añada = models.DateField()
+    precio = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)  
     notas = RichTextField()
     maridaje = models.TextField()
     imagen = models.ImageField(upload_to='vinos/', blank=True, null=True)

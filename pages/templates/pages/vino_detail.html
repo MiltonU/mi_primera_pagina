@@ -1,44 +1,38 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ vino.nombre }} — Ficha Boutique{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'pages/css/vino_detail.css' %}">
-{% endblock %}
-
-{% block header %}
-<header class="layout-header boutique-header">
-  <h1 class="boutique-title">{{ vino.nombre }} — {{ vino.varietal }}</h1>
-</header>
-{% endblock %}
-
 {% block content %}
-<section class="vino-detail boutique-container">
-  <article class="vino-detail-card fade-in-card">
-
-    <figure class="vino-detail-img-wrapper">
+<main class="container py-5">
+  <section class="row">
+    <div class="col-md-6">
       {% if vino.imagen %}
-        <img src="{{ vino.imagen.url }}" alt="Botella de {{ vino.nombre }} {{ vino.añada }}" class="vino-detail-img" aria-label="Imagen de vino {{ vino.nombre }}">
+        <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}" class="img-fluid rounded shadow-sm">
       {% else %}
-        <img src="{% static 'img/default_vino.jpg' %}" alt="Imagen no disponible" class="vino-detail-img">
+        <img src="{% static 'pages/img/default_vino.jpg' %}" alt="Imagen por defecto" class="img-fluid rounded shadow-sm">
       {% endif %}
-    </figure>
+    </div>
 
-    <section class="vino-detail-info">
-      <h2 class="vino-detail-title">
-        {{ vino.nombre }} <span class="vino-añada">({{ vino.añada }})</span>
-      </h2>
+    <div class="col-md-6">
+      <h1 class="display-5">{{ vino.nombre }}</h1>
+      <p class="lead">{{ vino.varietal }} — Añada {{ vino.añada|date:"Y" }}</p>
+      <p><strong>Precio:</strong> ${{ vino.precio }}</p>
 
-      <dl class="vino-detail-data">
-        <dt>Varietal</dt><dd>{{ vino.varietal }}</dd>
-        <dt>Notas</dt><dd>{{ vino.notas }}</dd>
-        <dt>Maridaje</dt><dd>{{ vino.maridaje }}</dd>
-      </dl>
-    </section>
-  </article>
+      <hr>
 
-  <div class="vino-back-link text-center mt-4">
-    <a href="{% url 'pages:vino_list' %}" class="btn-back">← Volver a la selección</a>
-  </div>
-</section>
+      <h5 class="mt-4">Notas sensoriales</h5>
+      <div class="richtext">
+        {{ vino.notas|safe }}
+      </div>
+
+      <h5 class="mt-4">Maridaje recomendado</h5>
+      <p>{{ vino.maridaje }}</p>
+
+      <div class="mt-4">
+        <a href="{% url 'pages:vino_list' %}" class="btn btn-outline-dark">← Volver a la selección</a>
+      </div>
+    </div>
+  </section>
+</main>
 {% endblock %}
