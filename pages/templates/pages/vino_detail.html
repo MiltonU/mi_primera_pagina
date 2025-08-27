@@ -13,7 +13,10 @@
         <img src="{% static 'pages/img/default_vino.jpg' %}" alt="Imagen por defecto" class="img-fluid rounded shadow-sm">
       {% endif %}
     </div>
-
+      <form method="post" action="{% url 'carrito:agregar' vino.slug %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-success">🛒 Agregar al carrito</button>
+      </form>
     <div class="col-md-6">
       <h1 class="display-5">{{ vino.nombre }}</h1>
       <p class="lead">{{ vino.varietal }} — Añada {{ vino.añada|date:"Y" }}</p>

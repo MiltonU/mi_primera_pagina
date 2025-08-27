@@ -18,4 +18,7 @@ urlpatterns = [
 
     # 🔐 Administración
     path('admin/', admin.site.urls),
+    
+    # 🛒 Carrito de compras
+    path('carrito/', include('carrito.urls')),
 ]

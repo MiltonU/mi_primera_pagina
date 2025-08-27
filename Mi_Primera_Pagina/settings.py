@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'pages',
     'ckeditor',
     'messenger',
-    'accounts.apps.AccountsConfig',    
+    'accounts.apps.AccountsConfig',
+    'carrito',    
 ]
 
 

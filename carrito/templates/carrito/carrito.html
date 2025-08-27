@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tu selección sensorial{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h1 class="display-5">Tu selección sensorial</h1>
+    <p class="lead">Vinos que elegiste para explorar, compartir o disfrutar.</p>
+  </section>
+
+  {% if carrito %}
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for slug, item in carrito.items %}
+          <tr>
+            <td style="width: 100px;">
+              {% if item.imagen %}
+                <img src="{{ item.imagen }}" alt="{{ item.nombre }}" class="img-fluid rounded" style="max-height: 80px;">
+              {% else %}
+                <img src="{% static 'pages/img/default_vino.jpg' %}" alt="Imagen por defecto" class="img-fluid rounded" style="max-height: 80px;">
+              {% endif %}
+            </td>
+            <td>{{ item.nombre }}</td>
+            <td>${{ item.precio|floatformat:2 }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.precio|floatformat:2|add:item.cantidad|floatformat:2 }}</td>
+            <td>
+              <form method="post" action="{% url 'carrito:quitar' slug %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-danger">✖ Quitar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-end mt-4">
+      <h4>Total sensorial: <strong>${{ total|floatformat:2 }}</strong></h4>
+      <a href="{% url 'pages:vino_list' %}" class="btn btn-outline-dark mt-3">← Seguir explorando</a>
+    </div>
+  {% else %}
+    <div class="alert alert-secondary text-center">
+      Tu carrito está vacío. Aún no seleccionaste ningún vino sensorial.
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'pages:vino_list' %}" class="btn btn-outline-dark">Explorar vinos</a>
+    </div>
+  {% endif %}
+</main>
+{% endblock %}
