@@ -18,6 +18,16 @@
   <h2 class="page-title">Tu perfil sensorial</h2>
   <p class="page-subtitle">Espacio personal para explorar, publicar y conectar</p>
 
+  {% load static %}
+
+<div class="profile-image mt-3">
+  {% if profile.avatar %}
+    <img src="{{ profile.avatar.url }}" alt="Foto de perfil de {{ user.username }}" class="img-thumbnail" style="max-width: 150px;">
+  {% else %}
+    <img src="{% static 'accounts/img/default_avatar.png' %}" alt="Avatar por defecto" class="img-thumbnail" style="max-width: 150px;">
+  {% endif %}
+</div>
+
   <div class="page-meta">
     <strong>Usuario:</strong> {{ user.username }}<br>
     <strong>Email:</strong> {{ user.email }}<br>

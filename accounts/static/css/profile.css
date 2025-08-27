@@ -95,3 +95,37 @@ legend {
   font-family: 'Lora', serif;
   font-size: 0.95rem;
 }
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+}
+
+.page-subtitle {
+  font-style: italic;
+  color: #555;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+}
+
+legend {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.img-thumbnail {
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+input[type="date"] {
+  font-family: 'Lora', serif;
+  padding: 0.4em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fdfdfd;
+}
