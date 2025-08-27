@@ -6,9 +6,23 @@
 {% block content %}
 <main class="container py-5">
   <article class="card p-4 shadow-sm">
-    <h2 class="h4">{{ message.subject }}</h2>
-    <p class="text-muted">De: <strong>{{ message.sender.username }}</strong></p>
-    <p class="text-muted">Recibido el {{ message.sent_at|date:"d M Y H:i" }}</p>
+    <header class="d-flex align-items-center mb-3">
+      <div class="me-3">
+        {% if message.sender.profile.avatar %}
+          <img src="{{ message.sender.profile.avatar.url }}" alt="Avatar de {{ message.sender.username }}" class="avatar-mini">
+        {% else %}
+          <img src="{% static 'accounts/img/default_avatar.png' %}" alt="Avatar por defecto" class="avatar-mini">
+        {% endif %}
+      </div>
+      <div>
+        <h2 class="h4 mb-1">{{ message.subject }}</h2>
+        {% if message.etiqueta %}
+          <span class="badge bg-info">{{ message.get_etiqueta_display }}</span>
+        {% endif %}
+        <p class="text-muted mb-0">De: <strong>{{ message.sender.username }}</strong></p>
+        <p class="text-muted">Recibido el {{ message.sent_at|date:"d M Y H:i" }}</p>
+      </div>
+    </header>
 
     <hr>
 
@@ -16,9 +30,9 @@
       <p>{{ message.body|linebreaks }}</p>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-4 d-flex justify-content-between">
       <a href="{% url 'messenger:inbox' %}" class="btn btn-outline-secondary">← Volver a la bandeja</a>
-      <a href="{% url 'messenger:reply' message.id %}" class="btn btn-outline-dark">Responder</a>
+      <a href="{% url 'messenger:reply' message.id %}" class="btn btn-outline-dark">✍️ Responder</a>
     </div>
   </article>
 </main>

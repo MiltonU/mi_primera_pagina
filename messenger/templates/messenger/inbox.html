@@ -1,36 +1,55 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mensajes — Blog Boutique{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'messenger/css/inbox.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4">📥 Mensajes recibidos</h2>
-  <ul class="list-group">
+<section class="page-wrapper">
+  <h2 class="page-title">Tu bandeja sensorial</h2>
+  <p class="page-subtitle">Conversaciones que respiran atmósfera editorial</p>
+
+  <a href="{% url 'messenger:enviar' %}" class="btn btn-outline-dark mb-4">✉️ Redactar mensaje</a>
+
+  {% if messages %}
     {% for message in messages %}
-      <li class="list-group-item d-flex justify-content-between align-items-center {% if not message.read %}fw-bold{% endif %}">
-        <div>
-          <strong>{{ message.subject }}</strong><br>
-          <small>De: {{ message.sender.username }} | {{ message.sent_at|date:"d M Y H:i" }}</small>
+      {% if message.id %}
+        <div class="card mb-3 p-3 shadow-sm d-flex align-items-start">
+          <div class="avatar-wrapper me-3">
+            {% if message.sender.profile.avatar %}
+              <img src="{{ message.sender.profile.avatar.url }}" alt="Avatar de {{ message.sender.username }}" class="avatar-mini">
+            {% else %}
+              <img src="{% static 'accounts/img/default_avatar.png' %}" alt="Avatar por defecto" class="avatar-mini">
+            {% endif %}
+          </div>
+          <div class="message-content">
+            <strong>{{ message.subject }}</strong>
+            {% if message.etiqueta %}
+              <span class="badge bg-info ms-2">{{ message.get_etiqueta_display }}</span>
+            {% endif %}
+            <br>
+            <small class="text-muted">De: {{ message.sender.username }} — {{ message.sent_at|date:"d M Y H:i" }}</small>
+            <p class="mt-2">{{ message.body|truncatewords:20 }}</p>
+
+            <div class="mt-2 d-flex gap-2">
+              <a href="{% url 'messenger:detail' message.id %}" class="btn btn-sm btn-outline-dark">Ver completo</a>
+              <a href="{% url 'messenger:conversacion' message.sender.username %}" class="btn btn-sm btn-link">🗨️ Ver conversación</a>
+            </div>
+          </div>
         </div>
-        <a href="{% url 'messenger:detail' message.pk %}" class="btn btn-sm btn-outline-primary">Ver</a>
-      </li>
-    {% empty %}
-      <li class="list-group-item text-muted">No tenés mensajes nuevos.</li>
+      {% endif %}
     {% endfor %}
-  </ul>
-</div>
-<form method="get" class="mb-4">
-  <div class="row g-2">
-    <div class="col-md-4">
-      <select name="read" class="form-select">
-        <option value="">Todos</option>
-        <option value="true" {% if request.GET.read == "true" %}selected{% endif %}>Leídos</option>
-        <option value="false" {% if request.GET.read == "false" %}selected{% endif %}>No leídos</option>
-      </select>
+  {% else %}
+    <div class="alert alert-secondary">
+      No tenés mensajes aún. Tu bandeja está en calma sensorial.
     </div>
-    <div class="col-md-4">
-      <input type="text" name="sender" class="form-control" placeholder="Filtrar por remitente" value="{{ request.GET.sender }}">
-    </div>
-    <div class="col-md-4">
-      <button type="submit" class="btn btn-outline-primary w-100">Filtrar</button>
-    </div>
+  {% endif %}
+
+  <div class="mt-5">
+    <a href="{% url 'accounts:profile' %}" class="btn-sensorial">← Volver al perfil</a>
   </div>
-</form>
+</section>
 {% endblock %}

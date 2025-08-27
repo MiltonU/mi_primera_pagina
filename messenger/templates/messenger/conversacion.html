@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Conversación con {{ otro_usuario.username }}{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h2 class="page-title">Conversación sensorial</h2>
+    <p class="page-subtitle">Tu intercambio con {{ otro_usuario.username }} respira atmósfera editorial</p>
+  </section>
+
+  {% if mensajes %}
+    <div class="conversation-thread">
+      {% for mensaje in mensajes %}
+        <div class="mensaje-bloque {% if mensaje.sender == request.user %}enviado{% else %}recibido{% endif %}">
+          <div class="avatar-wrapper">
+            {% if mensaje.sender.profile.avatar %}
+              <img src="{{ mensaje.sender.profile.avatar.url }}" alt="Avatar de {{ mensaje.sender.username }}" class="avatar-mini">
+            {% else %}
+              <img src="{% static 'accounts/img/default_avatar.png' %}" alt="Avatar por defecto" class="avatar-mini">
+            {% endif %}
+          </div>
+          <div class="mensaje-contenido">
+            <div class="mensaje-header">
+              <strong>{{ mensaje.sender.username }}</strong>
+              <small class="text-muted ms-2">{{ mensaje.sent_at|date:"d M Y H:i" }}</small>
+              {% if mensaje.etiqueta %}
+                <span class="badge bg-info ms-2">{{ mensaje.get_etiqueta_display }}</span>
+              {% endif %}
+            </div>
+            <div class="mensaje-body mt-2">
+              <p>{{ mensaje.body|linebreaks }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-secondary text-center">
+      Aún no hay mensajes entre vos y {{ otro_usuario.username }}. Podés iniciar la conversación sensorial ahora.
+    </div>
+  {% endif %}
+
+  <div class="mt-4 text-center">
+    <a href="{% url 'messenger:enviar' %}" class="btn btn-outline-dark">✉️ Redactar nuevo mensaje</a>
+    <a href="{% url 'messenger:inbox' %}" class="btn btn-link">← Volver a la bandeja</a>
+  </div>
+</main>
+{% endblock %}

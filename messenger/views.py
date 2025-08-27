@@ -10,35 +10,26 @@ from django.contrib import messages
 
 User = get_user_model()
 
-class EnviarMensajeView(View):
-    def get(self, request, user_id):
-        destinatario = get_object_or_404(User, id=user_id)
+class EnviarMensajeView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = MessageForm()
         return render(request, 'messenger/enviar_mensaje.html', {
-            'destinatario': destinatario
+            'form': form
         })
 
-    def post(self, request, user_id):
-        destinatario = get_object_or_404(User, id=user_id)
-        subject = request.POST.get('subject')
-        body = request.POST.get('body')
-
-        if subject and body:
-            Message.objects.create(
-                sender=request.user,
-                recipient=destinatario,
-                subject=subject,
-                body=body
-            )
+    def post(self, request):
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            mensaje = form.save(commit=False)
+            mensaje.sender = request.user
+            mensaje.save()
             messages.success(request, "Mensaje enviado con éxito ✉️")
-            return redirect('accounts:profile')
-
-        messages.error(request, "Faltan campos obligatorios.")
-        return render(request, 'messenger/enviar_mensaje.html', {
-            'destinatario': destinatario,
-            'subject': subject,
-            'body': body
-        })
-
+            return redirect('messenger:sent')
+        else:
+            messages.error(request, "Faltan campos obligatorios o hay errores en el formulario.")
+            return render(request, 'messenger/enviar_mensaje.html', {
+                'form': form
+            })
 class InboxView(LoginRequiredMixin, ListView):
     model = Message
     template_name = "messenger/inbox.html"
@@ -78,7 +69,6 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
             message.read = True
             message.save()
         return message
-
 class ComposeView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
@@ -108,3 +98,23 @@ class ReplyView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("messenger:sent")
+    
+ 
+    
+class ConversacionView(LoginRequiredMixin, ListView):
+    model = Message
+    template_name = "messenger/conversacion.html"
+    context_object_name = "mensajes"
+
+    def get_queryset(self):
+        otro_usuario = get_object_or_404(User, username=self.kwargs['username'])
+        return Message.objects.filter(
+            sender=self.request.user, recipient=otro_usuario
+        ) | Message.objects.filter(
+            sender=otro_usuario, recipient=self.request.user
+        ).order_by("sent_at")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["otro_usuario"] = get_object_or_404(User, username=self.kwargs["username"])
+        return context

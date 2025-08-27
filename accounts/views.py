@@ -34,6 +34,12 @@ class ProfileView(LoginRequiredMixin, DetailView):
             recipient=self.request.user
         ).order_by('-sent_at')[:5]  # Mostramos los 5 más recientes
         return context
+    def get(self, request):
+        profile, creado = Profile.objects.get_or_create(user=request.user)
+        return render(request, 'accounts/profile.html', {
+            'profile': profile
+        })
+
 
 
 # 🛠 Vista combinada para editar datos de usuario y perfil sensorial
@@ -63,7 +69,7 @@ class EditarPerfilView(LoginRequiredMixin, View):
 # 💬 Vista de bandeja de entrada (mensajería interna)
 class InboxView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = 'accounts/inbox.html'
+    template_name = 'messenger/inbox.html'
     context_object_name = 'mensajes'
     extra_context = {
         'title': 'Mensajes',
