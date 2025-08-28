@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Mis pedidos sensoriales{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h1 class="display-5">📦 Mis pedidos sensoriales</h1>
+    <p class="lead">Cada selección refleja tu narrativa gustativa y estética editorial.</p>
+  </section>
+
+  {% if pedidos %}
+    <section class="row">
+      {% for pedido in pedidos %}
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+              <p class="card-text"><strong>Fecha:</strong> {{ pedido.creado_en|date:"d M Y H:i" }}</p>
+              <p class="card-text"><strong>Total:</strong> ${{ pedido.total }}</p>
+              <ul class="list-group list-group-flush mt-3">
+                {% for item in pedido.items.all %}
+                  <li class="list-group-item">
+                    {{ item.cantidad }} × {{ item.producto.nombre }} — ${{ item.subtotal }}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </section>
+  {% else %}
+    <div class="alert alert-secondary text-center">
+      Aún no realizaste ningún pedido. Tu historia sensorial está por comenzar.
+    </div>
+  {% endif %}
+</main>
+{% endblock %}
