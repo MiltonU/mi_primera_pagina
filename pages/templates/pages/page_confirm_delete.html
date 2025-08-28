@@ -1,12 +1,17 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title %}Eliminar Página{% endblock %}
+
 {% block content %}
-<div class="page-delete">
-  <h2>¿Estás seguro que querés eliminar esta página?</h2>
-  <p><strong>{{ page.title }}</strong></p>
-  <form method="post">
+<main class="container py-5 text-center">
+  <section class="mb-5">
+    <h2 class="display-5 text-danger">🗑️ ¿Eliminar esta publicación?</h2>
+    <p class="lead text-muted">Estás por eliminar <strong>{{ object.title }}</strong>. Esta acción no se puede deshacer.</p>
+  </section>
+
+  <form method="post" class="d-inline-block">
     {% csrf_token %}
-    <button type="submit">Sí, eliminar</button>
-    <a href="{% url 'pages:page_detail' page.pk %}">Cancelar</a>
+    <button type="submit" class="btn btn-danger btn-lg px-4 me-2">Eliminar definitivamente</button>
+    <a href="{% url 'pages:page_list' %}" class="btn btn-outline-dark btn-lg px-4">Cancelar</a>
   </form>
-</div>
+</main>
 {% endblock %}

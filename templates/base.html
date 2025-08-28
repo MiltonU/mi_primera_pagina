@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Blog Boutique{% endblock %}</title>
 
-    <!-- Estilos extra por template (debe ir primero para tener prioridad) -->
+    <!-- Estilos extra por template (prioridad visual) -->
     {% block extra_css %}{% endblock %}
 
     <!-- Estilos base -->
@@ -21,25 +21,35 @@
 
     <div class="layout-container">
         {% block header %}
-        <header class="layout-header">
+        <header class="layout-header text-center py-3">
             <h1 class="site-title">Blog Boutique</h1>
         </header>
         {% endblock %}
 
         {% block main %}
-        <main class="layout-main">
+        <main class="layout-main container py-4">
             {% block content %}{% endblock %}
+
+            {% if messages %}
+              <div class="mt-4">
+                {% for message in messages %}
+                  <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
         </main>
         {% endblock %}
 
         {% block footer %}
-        <footer class="layout-footer">
+        <footer class="layout-footer text-center py-3">
             <p>&copy; {{ now|date:"Y" }} — Narrativa sensorial por Milton</p>
         </footer>
         {% endblock %}
     </div>
 
     <!-- Scripts extra por template -->
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    {% endblock %}
 </body>
 </html>

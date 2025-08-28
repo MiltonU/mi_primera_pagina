@@ -1,54 +1,43 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ title|default:"Mis Publicaciones" }}{% endblock %}
-
-{% block header %}
-<header class="layout-header boutique-header">
-  <h1 class="boutique-title">Catálogo de publicaciones</h1>
-</header>
-{% endblock %}
+{% extends "base.html" %}
+{% block title %}Mis páginas sensoriales{% endblock %}
 
 {% block content %}
-<section class="page-list boutique-container">
-  {% if pages %}
-    <div class="page-grid">
-      {% for page in pages %}
-        <article class="page-card">
-          <header>
-            <h2 class="page-title">{{ page.title }}</h2>
-            <p class="page-meta">Publicado el {{ page.created_at|date:"d M Y" }}</p>
-          </header>
+<main class="container py-5">
+  <section class="text-center mb-4">
+    <h1 class="display-4">Mis páginas sensoriales</h1>
+    <p class="lead">Narrativas curadas con atmósfera editorial y estética boutique.</p>
+    <a href="{% url 'pages:page_create' %}" class="btn btn-outline-dark">📝 Crear nueva página</a>
+  </section>
 
-          {% if page.image %}
-            <div class="page-thumb">
-              <img src="{{ page.image.url }}" alt="Imagen de {{ page.title }}">
+  {% if page_list %}
+    <section class="row">
+      {% for page in page_list %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            {% if page.imagen %}
+              <img src="{{ page.imagen.url }}" class="card-img-top" alt="{{ page.titulo }}">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ page.titulo }}</h5>
+              <p class="card-text">{{ page.subtitulo }}</p>
+              <p class="card-text"><strong>Fecha:</strong> {{ page.fecha|date:"d M Y" }}</p>
+              <a href="{% url 'pages:page_detail' page.pk %}" class="btn btn-outline-dark w-100 mb-2">📖 Leer más</a>
+
+              {% if user == page.autor %}
+                <div class="d-flex gap-2">
+                  <a href="{% url 'pages:page_update' page.pk %}" class="btn btn-sm btn-outline-primary w-50">📝 Editar</a>
+                  <a href="{% url 'pages:page_delete' page.pk %}" class="btn btn-sm btn-outline-danger w-50">🗑️ Borrar</a>
+                </div>
+              {% endif %}
             </div>
-          {% endif %}
-
-          <div class="page-excerpt">
-            {{ page.content|truncatewords:30 }}
           </div>
-
-          <footer>
-            <a href="{% url 'pages:page_detail' page.pk %}" class="btn-sensorial">Leer más</a>
-          </footer>
-        </article>
+        </div>
       {% endfor %}
-    </div>
-
-    {% if is_paginated %}
-      <nav class="pagination">
-        {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}">← Anterior</a>
-        {% endif %}
-        <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
-        {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">Siguiente →</a>
-        {% endif %}
-      </nav>
-    {% endif %}
+    </section>
   {% else %}
-    <p class="no-pages-msg">Aún no hay publicaciones. Animate a crear tu primera ficha sensorial.</p>
+    <div class="alert alert-secondary text-center">
+      No hay páginas aún. Animate a crear la primera.
+    </div>
   {% endif %}
-</section>
+</main>
 {% endblock %}

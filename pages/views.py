@@ -4,6 +4,8 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .models import Page, Vino
 from django.views.generic import TemplateView
+from django.contrib import messages
+
 
 class ContactView(TemplateView):
     template_name = 'pages/contact.html'
@@ -115,35 +117,51 @@ class PageDetailView(LoginRequiredMixin, DetailView):
         'show_navbar': False
     }
 
+
 class PageCreateView(LoginRequiredMixin, CreateView):
     model = Page
+    fields = ['title', 'subtitle', 'content', 'image']
     template_name = 'pages/page_form.html'
-    fields = ['title', 'content', 'image']
     success_url = reverse_lazy('pages:page_list')
-    extra_context = {
-        'title': 'Nueva Publicación',
-        'show_navbar': False
-    }
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        print("✅ Página lista para guardar:", form.cleaned_data)
+        messages.success(self.request, "✅ Página creada con éxito.")
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "⚠️ No se pudo crear la página. Revisá los campos.")
+        return super().form_invalid(form)
+
+    
+from django.views.generic.edit import UpdateView
 
 class PageUpdateView(LoginRequiredMixin, UpdateView):
     model = Page
+    fields = ['title', 'subtitle', 'content', 'image']
     template_name = 'pages/page_form.html'
-    fields = ['title', 'content', 'image']
-    success_url = reverse_lazy('pages:page_list')
-    extra_context = {
-        'title': 'Editar Publicación',
-        'show_navbar': False
-    }
+    success_url = '/pages/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        messages.success(self.request, "✅ Página actualizada con éxito.")
+        return super().form_valid(form)
+
+
+    def get_queryset(self):
+        return Page.objects.filter(author=self.request.user)
 
 class PageDeleteView(LoginRequiredMixin, DeleteView):
     model = Page
     template_name = 'pages/page_confirm_delete.html'
     success_url = reverse_lazy('pages:page_list')
-    extra_context = {
-        'title': 'Eliminar Publicación',
-        'show_navbar': False
-    }
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "🗑️ Página eliminada correctamente.")
+        return super().delete(request, *args, **kwargs)
+
+
+    def get_queryset(self):
+        return Page.objects.filter(author=self.request.user)
+    

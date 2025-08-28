@@ -20,8 +20,9 @@ urlpatterns = [
 
     # 📄 Vistas para Page
     path('', PageListView.as_view(), name='page_list'),
-    path('create/', PageCreateView.as_view(), name='page_create'),
     path('<int:pk>/', PageDetailView.as_view(), name='page_detail'),
-    path('update/<int:pk>/', PageUpdateView.as_view(), name='page_update'),
-    path('delete/<int:pk>/', PageDeleteView.as_view(), name='page_delete'),
+    path('crear/', PageCreateView.as_view(), name='page_create'),
+    path('<int:pk>/editar/', PageUpdateView.as_view(), name='page_update'),
+    path('<int:pk>/borrar/', PageDeleteView.as_view(), name='page_delete'),
+
 ]
