@@ -1,62 +1,61 @@
 {% extends "base.html" %}
-{% load static %}
-
-{% block title %}Tu selección sensorial{% endblock %}
+{% block title %}Mi carrito sensorial{% endblock %}
 
 {% block content %}
 <main class="container py-5">
   <section class="text-center mb-4">
-    <h1 class="display-5">Tu selección sensorial</h1>
-    <p class="lead">Vinos que elegiste para explorar, compartir o disfrutar.</p>
+    <h1 class="display-5">🛒 Mi carrito sensorial</h1>
+    <p class="lead">Tu selección curada de vinos con atmósfera editorial.</p>
   </section>
 
   {% if carrito %}
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Subtotal</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for slug, item in carrito.items %}
+    <div class="table-responsive mb-4">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
           <tr>
-            <td style="width: 100px;">
-              {% if item.imagen %}
-                <img src="{{ item.imagen }}" alt="{{ item.nombre }}" class="img-fluid rounded" style="max-height: 80px;">
-              {% else %}
-                <img src="{% static 'pages/img/default_vino.jpg' %}" alt="Imagen por defecto" class="img-fluid rounded" style="max-height: 80px;">
-              {% endif %}
-            </td>
-            <td>{{ item.nombre }}</td>
-            <td>${{ item.precio|floatformat:2 }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>${{ item.precio|floatformat:2|add:item.cantidad|floatformat:2 }}</td>
-            <td>
-              <form method="post" action="{% url 'carrito:quitar' slug %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-outline-danger">✖ Quitar</button>
-              </form>
-            </td>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for slug, item in carrito.items %}
+            <tr>
+              <td>
+                {% if item.imagen %}
+                  <img src="{{ item.imagen }}" alt="{{ item.nombre }}" class="img-fluid" style="max-height: 80px;">
+                {% endif %}
+              </td>
+              <td>{{ item.nombre }}</td>
+              <td>${{ item.precio|floatformat:2 }}</td>
+              <td>{{ item.cantidad }}</td>
+              <td>${{ item.precio|floatformat:2|floatformat:"2"|add:item.precio|floatformat:"2" }}</td>
+              <td>
+                <a href="{% url 'carrito:quitar' slug %}" class="btn btn-sm btn-outline-danger">🗑️ Quitar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="table-dark">
+            <td colspan="4" class="text-end"><strong>Total:</strong></td>
+            <td colspan="2"><strong>${{ total|floatformat:2 }}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
 
     <div class="text-end mt-4">
-      <h4>Total sensorial: <strong>${{ total|floatformat:2 }}</strong></h4>
-      <a href="{% url 'pages:vino_list' %}" class="btn btn-outline-dark mt-3">← Seguir explorando</a>
+      <a href="{% url 'carrito:checkout' %}" class="btn btn-dark btn-lg">
+        ✅ Ir al checkout
+      </a>
     </div>
   {% else %}
-    <div class="alert alert-secondary text-center">
-      Tu carrito está vacío. Aún no seleccionaste ningún vino sensorial.
-    </div>
-    <div class="text-center mt-4">
-      <a href="{% url 'pages:vino_list' %}" class="btn btn-outline-dark">Explorar vinos</a>
+    <div class="alert alert-warning text-center">
+      Tu carrito está vacío. Volvé al catálogo y seleccioná tus vinos favoritos.
     </div>
   {% endif %}
 </main>
