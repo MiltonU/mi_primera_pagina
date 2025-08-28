@@ -134,7 +134,20 @@ LOGIN_REDIRECT_URL = '/pages/vinos/'  # Ajustá según tu ruta real
 LOGOUT_REDIRECT_URL = '/'
 
 
+# Archivos multimedia (para CKEditor y uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': 'image2',
+        'removePlugins': 'stylesheetparser',
+        'allowedContent': True,
+    }
+}
 
 
 

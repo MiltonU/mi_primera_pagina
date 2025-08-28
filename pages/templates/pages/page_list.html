@@ -9,35 +9,35 @@
     <a href="{% url 'pages:page_create' %}" class="btn btn-outline-dark">📝 Crear nueva página</a>
   </section>
 
-  {% if page_list %}
-    <section class="row">
-      {% for page in page_list %}
-        <div class="col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            {% if page.imagen %}
-              <img src="{{ page.imagen.url }}" class="card-img-top" alt="{{ page.titulo }}">
-            {% endif %}
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">{{ page.titulo }}</h5>
-              <p class="card-text">{{ page.subtitulo }}</p>
-              <p class="card-text"><strong>Fecha:</strong> {{ page.fecha|date:"d M Y" }}</p>
-              <a href="{% url 'pages:page_detail' page.pk %}" class="btn btn-outline-dark w-100 mb-2">📖 Leer más</a>
+ {% if page_list %}
+  <section class="row">
+    {% for page in page_list %}
+      <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          {% if page.image %}
+            <img src="{{ page.image.url }}" class="card-img-top" alt="Imagen de {{ page.title }}">
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ page.title }}</h5>
+            <p class="card-text">{{ page.subtitle }}</p>
+            <p class="card-text"><strong>Fecha:</strong> {{ page.created_at|date:"d M Y" }}</p>
+            <a href="{% url 'pages:page_detail' page.pk %}" class="btn btn-outline-dark w-100 mb-2">📖 Leer más</a>
 
-              {% if user == page.autor %}
-                <div class="d-flex gap-2">
-                  <a href="{% url 'pages:page_update' page.pk %}" class="btn btn-sm btn-outline-primary w-50">📝 Editar</a>
-                  <a href="{% url 'pages:page_delete' page.pk %}" class="btn btn-sm btn-outline-danger w-50">🗑️ Borrar</a>
-                </div>
-              {% endif %}
-            </div>
+            {% if user == page.author %}
+              <div class="d-flex gap-2">
+                <a href="{% url 'pages:page_update' page.pk %}" class="btn btn-sm btn-outline-primary w-50">📝 Editar</a>
+                <a href="{% url 'pages:page_delete' page.pk %}" class="btn btn-sm btn-outline-danger w-50">🗑️ Borrar</a>
+              </div>
+            {% endif %}
           </div>
         </div>
-      {% endfor %}
-    </section>
-  {% else %}
-    <div class="alert alert-secondary text-center">
-      No hay páginas aún. Animate a crear la primera.
-    </div>
-  {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+{% else %}
+  <div class="alert alert-secondary text-center">
+    No hay páginas aún. Animate a crear la primera.
+  </div>
+{% endif %}
 </main>
 {% endblock %}

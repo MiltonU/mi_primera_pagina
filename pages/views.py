@@ -96,7 +96,7 @@ class VinoDeleteView(LoginRequiredMixin, DeleteView):
 class PageListView(LoginRequiredMixin, ListView):
     model = Page
     template_name = 'pages/page_list.html'
-    context_object_name = 'pages'
+    context_object_name = 'page_list'
     paginate_by = 6
     extra_context = {
         'title': 'Mis Publicaciones',

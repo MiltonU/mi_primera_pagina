@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from Mi_Primera_Pagina.views import home_view, about_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # 🌿 Página principal y narrativa sensorial
@@ -18,7 +20,7 @@ urlpatterns = [
 
     # 🔐 Administración
     path('admin/', admin.site.urls),
-    
+
     # 🛒 Carrito de compras
     path('carrito/', include('carrito.urls')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
