@@ -1,77 +1,46 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from carrito.models import Pedido, ItemPedido
-from pages.models import Vino
-from django.contrib.auth.models import User
-from messenger.models import Mensaje  # Si usás mensajería interna
+{% extends "base.html" %}
+{% block title %}Checkout sensorial{% endblock %}
 
-@login_required
-def checkout(request):
-    carrito = request.session.get('carrito', {})
+{% block content %}
+<main class="container py-5">
+  <h1 class="display-5 text-center mb-4">🛒 Confirmar pedido</h1>
 
-    if request.method == 'POST':
-        if not carrito:
-            messages.warning(request, "Tu carrito está vacío.")
-            return redirect('carrito:ver')
+  {% if items %}
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr>
+            <td>{{ item.vino.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.subtotal|floatformat:2 }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="table-dark">
+          <td colspan="2" class="text-end"><strong>Total:</strong></td>
+          <td><strong>${{ total|floatformat:2 }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
 
-        pedido = Pedido.objects.create(usuario=request.user, total=0)
-        total = 0
-
-        for slug, item in carrito.items():
-            vino = get_object_or_404(Vino, slug=slug)
-            cantidad = item['cantidad']
-            precio_unitario = vino.precio
-            subtotal = cantidad * precio_unitario
-
-            ItemPedido.objects.create(
-                pedido=pedido,
-                producto=vino,
-                cantidad=cantidad,
-                precio_unitario=precio_unitario
-            )
-
-            total += subtotal
-
-        pedido.total = total
-        pedido.save()
-        request.session['carrito'] = {}
-
-        # Mensaje interno de confirmación
-        sistema = User.objects.filter(is_superuser=True).first()
-        if sistema:
-            Mensaje.objects.create(
-                emisor=sistema,
-                receptor=request.user,
-                asunto="🧾 Confirmación de pedido",
-                cuerpo=f"""
-Hola {request.user.username},
-
-Tu pedido #{pedido.id} fue confirmado con éxito el {pedido.creado_en.strftime('%d/%m/%Y %H:%M')}.
-Total: ${pedido.total}
-
-Gracias por confiar en nuestra experiencia sensorial.
-""".strip()
-            )
-
-        messages.success(request, "✅ Pedido confirmado con éxito.")
-        return redirect('pages:vino_list')
-
-    # Si es GET, mostrar el resumen
-    items = []
-    total = 0
-    for slug, item in carrito.items():
-        vino = get_object_or_404(Vino, slug=slug)
-        cantidad = item['cantidad']
-        subtotal = vino.precio * cantidad
-        total += subtotal
-        items.append({
-            'vino': vino,
-            'cantidad': cantidad,
-            'subtotal': subtotal
-        })
-
-    return render(request, 'carrito/checkout.html', {
-        'items': items,
-        'total': total
-    })
+    <form method="post">
+      {% csrf_token %}
+      <div class="text-end mt-4">
+        <button type="submit" class="btn btn-dark btn-lg">✅ Confirmar pedido</button>
+      </div>
+    </form>
+  {% else %}
+    <div class="alert alert-warning text-center">
+      Tu carrito está vacío. Volvé al catálogo para seleccionar tus vinos favoritos.
+    </div>
+  {% endif %}
+</main>
+{% endblock %}

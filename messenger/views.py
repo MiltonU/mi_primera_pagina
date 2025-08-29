@@ -37,6 +37,11 @@ class InboxView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         qs = Message.objects.filter(recipient=self.request.user).order_by("-sent_at")
+
+        # 🔧 Apagar notificación al entrar
+        qs.filter(read=False).update(read=True)
+
+        # Filtros opcionales
         read = self.request.GET.get("read")
         sender = self.request.GET.get("sender")
 

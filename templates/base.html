@@ -15,9 +15,11 @@
     <link rel="stylesheet" href="{% static 'mi_primera_app/css/home.css' %}">
 </head>
 <body>
-    {% if show_navbar %}
-      {% include "includes/navbar.html" %}
-    {% endif %}
+    <body style="padding-top: 70px;">
+
+    {% if user.is_authenticated %}
+  {% include "includes/navbar.html" %}
+{% endif %}
 
     <div class="layout-container">
         {% block header %}
@@ -51,5 +53,8 @@
     {% block extra_js %}
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     {% endblock %}
+    <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 0.9rem;">
+  Beber con moderación. El consumo en exceso es perjudicial para la salud. Prohibida la venta a menores de 18 años.
+</footer>
 </body>
 </html>
