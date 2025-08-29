@@ -1,12 +1,11 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import EditarPerfilView
 from .views import (
     ProfileView,
     InboxView,
     RegisterView,
     BoutiqueLoginView,
-    
+    EditarPerfilView,
 )
 
 app_name = 'accounts'
@@ -27,5 +26,6 @@ urlpatterns = [
     # 📝 Registro de nuevos usuarios
     path('registro/', RegisterView.as_view(), name='register'),
 
+    # 🎨 Edición de perfil sensorial
     path('editar/', EditarPerfilView.as_view(), name='editar_perfil'),
 ]

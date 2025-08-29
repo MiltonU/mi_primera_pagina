@@ -1,24 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Registro Boutique{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
 {% block content %}
-<section class="registro-sensorial">
-  <header class="registro-header">
-    <h1>Crear cuenta</h1>
-    <p>Accedé a tu espacio personal con atmósfera editorial.</p>
+<section class="container py-5" style="max-width: 600px;">
+  <header class="text-center mb-4">
+    <h1 class="display-6">📝 Crear cuenta</h1>
+    <p class="lead">Accedé a tu espacio personal con atmósfera editorial.</p>
   </header>
 
-  <form method="post" class="registro-form">
+  <form method="post" class="needs-validation" novalidate>
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+      <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <div class="text-danger small">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
 
-    <button type="submit" class="btn btn-primary">Registrarme</button>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-success btn-lg">Registrarme</button>
+    </div>
   </form>
 
-  <footer class="registro-footer">
+  <footer class="text-center mt-4">
     <p>¿Ya tenés cuenta?
-      <a href="{% url 'accounts:login' %}">Iniciá sesión acá</a>
+      <a href="{% url 'login' %}" class="text-decoration-none">Iniciá sesión acá</a>
     </p>
   </footer>
 </section>

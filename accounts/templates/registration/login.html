@@ -1,21 +1,39 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Iniciar sesión{% endblock %}
 
-{% block content %}
-<section class="login-sensorial">
-  <h1>Bienvenido de nuevo</h1>
-  <p>Ingresá a tu espacio boutique.</p>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
-  <form method="post">
+{% block content %}
+<section class="container py-5" style="max-width: 500px;">
+  <h2 class="text-center mb-4 display-6">🔐 Iniciar sesión</h2>
+
+  {% if form.errors %}
+    <div class="alert alert-danger">
+      Verificá tus credenciales. El usuario o la contraseña no son válidos.
+    </div>
+  {% endif %}
+
+  <form method="post" novalidate>
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Entrar</button>
+    <div class="mb-3">
+      <label for="id_username" class="form-label">Usuario</label>
+      {{ form.username }}
+    </div>
+    <div class="mb-3">
+      <label for="id_password" class="form-label">Contraseña</label>
+      {{ form.password }}
+    </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-dark btn-lg">Ingresar</button>
+    </div>
   </form>
 
-  <p class="registro-link">
-    ¿No tenés cuenta?
-    <a href="{% url 'accounts:register' %}">Registrate acá</a>
-  </p>
+  <div class="text-center mt-4">
+    <a href="{% url 'password_reset' %}" class="text-muted">¿Olvidaste tu contraseña?</a>
+  </div>
 </section>
 {% endblock %}

@@ -10,9 +10,16 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from .models import Profile
 from .forms import UserForm, ProfileForm
-from messenger.models import Message  # Asegurate de que el modelo se llame exactamente así
+from messenger.models import Message  
 
 User = get_user_model()
+
+from django.contrib.auth.views import LoginView
+from .forms import BoutiqueLoginForm
+
+class BoutiqueLoginView(LoginView):
+    template_name = 'registration/login.html'
+    authentication_form = BoutiqueLoginForm
 
 # 👤 Vista sensorial del perfil de usuario
 

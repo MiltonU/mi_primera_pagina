@@ -14,14 +14,18 @@
 {% endblock %}
 
 {% block content %}
-<section class="verificacion-boutique" role="region" aria-label="Verificación de edad">
-  <h2 class="verificacion-pregunta">¿Sos mayor de edad?</h2>
-  <p class="verificacion-subtexto">Esta selección sensorial está destinada a mayores de 18 años.</p>
+<section class="container py-5 text-center">
+  <h2 class="mb-4 display-5">¿Sos mayor de edad?</h2>
+  <p class="lead mb-5">Esta selección sensorial está destinada exclusivamente a mayores de 18 años.</p>
 
-  <form method="post" class="verificacion-form" autocomplete="off">
+  <form method="post" class="d-flex justify-content-center gap-3 flex-wrap">
     {% csrf_token %}
-    <button type="submit" name="respuesta" value="si" class="btn boutique-btn">Sí</button>
-    <button type="submit" name="respuesta" value="no" class="btn boutique-btn-negativo">No</button>
+    <button type="submit" name="respuesta" value="si" class="btn btn-success btn-lg px-4">
+      ✅ Sí, tengo 18+
+    </button>
+    <button type="submit" name="respuesta" value="no" class="btn btn-outline-danger btn-lg px-4">
+      🚫 No, soy menor
+    </button>
   </form>
 </section>
 {% endblock %}
