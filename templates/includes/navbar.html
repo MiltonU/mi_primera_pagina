@@ -10,7 +10,7 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'pages:vino_list' %}" aria-current="page">🏠 Inicio</a>
+          <a class="nav-link" href="{% url 'pages:vino_list' %}">🏠 Inicio</a>
         </li>
 
         <li class="nav-item">
@@ -50,9 +50,11 @@
           </li>
 
           <li class="nav-item">
-            <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+            <form action="{% url 'accounts:logout' %}" method="post" class="nav-link m-0 p-0">
               {% csrf_token %}
-              <button type="submit" class="btn btn-link nav-link p-0">🚪 Cerrar sesión</button>
+              <button type="submit" class="btn btn-link text-decoration-none text-dark p-0">
+                🚪 Cerrar sesión
+              </button>
             </form>
           </li>
         {% else %}
